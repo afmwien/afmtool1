@@ -1,0 +1,2 @@
+# AFMTool1 Requirements
+# Minimale Dependencies - erweitern bei Bedarf
