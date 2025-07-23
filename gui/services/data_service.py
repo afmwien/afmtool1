@@ -47,7 +47,7 @@ class DataService:
             return "erfassung"
     
     def advance_case_status(self, case_index):
-        """Case zum nächsten Status weiterschalten"""
+        """Case zum nächsten Status weiterschalten (nur bis Freigegeben)"""
         cases = self.get_cases()
         if case_index >= len(cases):
             return False
@@ -55,20 +55,52 @@ class DataService:
         case = cases[case_index]
         current_status = self.get_case_status(case)
         
-        # Status-Mapping für nächsten Schritt
+        # Status-Mapping für nächsten Schritt (ohne archivierung - nur bis validierung)
         next_status_map = {
             "erfassung": "verarbeitung",
-            "verarbeitung": "validierung", 
-            "validierung": "archivierung"
+            "verarbeitung": "validierung"
+            # "validierung" hat keinen nächsten Status mehr in der manuellen Bearbeitung
         }
         
         next_status = next_status_map.get(current_status)
         if not next_status:
-            return False  # Bereits abgeschlossen
+            return False  # Bereits bei Freigegeben oder darüber
             
         # Zeitstempel hinzufügen
         timestamp = f"{next_status}:{datetime.now().isoformat()}"
         case["zeitstempel"].append(timestamp)
+        
+        # AFM-String aktualisieren
+        update_case_afm_string(case)
+        
+        # Speichern
+        self._save_cases({"cases": cases})
+        return True
+    
+    def retreat_case_status(self, case_index):
+        """Case zum vorherigen Status zurückschalten (nur bis NEU)"""
+        cases = self.get_cases()
+        if case_index >= len(cases):
+            return False
+            
+        case = cases[case_index]
+        current_status = self.get_case_status(case)
+        
+        # Status-Mapping für vorherigen Schritt (ohne archivierung)
+        previous_status_map = {
+            "verarbeitung": "erfassung",
+            "validierung": "verarbeitung"
+            # "archivierung" sollte nicht manuell zurückgesetzt werden können
+        }
+        
+        previous_status = previous_status_map.get(current_status)
+        if not previous_status:
+            return False  # Bereits am Anfang oder bei archivierung
+            
+        # Letzten entsprechenden Zeitstempel entfernen
+        timestamps = case["zeitstempel"]
+        # Alle Zeitstempel des aktuellen Status entfernen
+        case["zeitstempel"] = [ts for ts in timestamps if not ts.startswith(f"{current_status}:")]
         
         # AFM-String aktualisieren
         update_case_afm_string(case)
@@ -93,7 +125,81 @@ class DataService:
         self._save_cases({"cases": cases})
         return new_case
     
+    def create_empty_case(self):
+        """Leeren Case für manuelle Eingabe erstellen"""
+        cases = self.get_cases()
+        new_case = {
+            "quelle": "",
+            "fundstellen": "",
+            "afm_string": "",
+            "zeitstempel": [f"erfassung:{datetime.now().isoformat()}"]
+        }
+        # Leeren AFM-String setzen
+        new_case["afm_string"] = ""
+        
+        cases.append(new_case)
+        self._save_cases({"cases": cases})
+        
+        # Index des neuen Cases zurückgeben
+        return len(cases) - 1
+    
     def _save_cases(self, data):
         """Cases speichern"""
         with open(self.cases_file, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
+    
+    def update_case(self, case_index, updates):
+        """Case aktualisieren"""
+        cases = self.get_cases()
+        if case_index >= len(cases):
+            return False
+            
+        case = cases[case_index]
+        
+        # Updates anwenden
+        for key, value in updates.items():
+            case[key] = value
+        
+        # Speichern
+        self._save_cases({"cases": cases})
+        return True
+    
+    def regenerate_afm_string(self, case_index):
+        """AFM-String für einen Case neu generieren"""
+        cases = self.get_cases()
+        if case_index >= len(cases):
+            return False
+            
+        case = cases[case_index]
+        update_case_afm_string(case)
+        
+        # Speichern
+        self._save_cases({"cases": cases})
+        return True
+    
+    def delete_case(self, case_index):
+        """Case komplett löschen"""
+        cases = self.get_cases()
+        if case_index >= len(cases):
+            return False, None
+            
+        # Case aus Liste entfernen
+        deleted_case = cases.pop(case_index)
+        
+        # Speichern
+        self._save_cases({"cases": cases})
+        return True, deleted_case
+    
+    def is_first_edit(self, case_index):
+        """Prüfen ob ein Case das erste Mal bearbeitet wird"""
+        cases = self.get_cases()
+        if case_index >= len(cases):
+            return False
+            
+        case = cases[case_index]
+        current_status = self.get_case_status(case)
+        
+        # Case ist bei "erfassung" und hat nur einen Zeitstempel
+        return (current_status == "erfassung" and 
+                len(case.get("zeitstempel", [])) == 1 and
+                case.get("zeitstempel", [""])[0].startswith("erfassung:"))

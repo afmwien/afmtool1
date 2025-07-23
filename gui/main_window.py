@@ -35,6 +35,9 @@ class AFMToolGUI:
         self.current_view = "dashboard"
         
         # Status-Mapping (erfassung → NEU, etc.)
+        # HINWEIS: Status "NEU" hat zwei Bedeutungen:
+        # 1. Importierte Cases: Status "erfassung" = muss bearbeitet werden
+        # 2. Händisch angelegte Cases: Status "erfassung" = Felder sind leer/neu
         self.status_mapping = {
             "erfassung": {"name": "NEU", "emoji": "🔴", "color": "#FF0000", "next": "verarbeitung"},
             "verarbeitung": {"name": "Bearbeitung", "emoji": "🟡", "color": "#FFD700", "next": "validierung"},
@@ -69,6 +72,7 @@ class AFMToolGUI:
         """Dashboard-Ansicht anzeigen"""
         self.case_editor.hide()
         self.dashboard.show()
+        self.dashboard.refresh()  # Dashboard nach Anzeige aktualisieren
         self.current_view = "dashboard"
     
     def show_case_edit_view(self, case_index):
@@ -81,6 +85,14 @@ class AFMToolGUI:
         """Case zur Bearbeitung öffnen"""
         self.show_case_edit_view(case_index)
         log_action("GUI_ACTION", f"Case {case_index} zur Bearbeitung geöffnet")
+    
+    def edit_new_case(self, case_index):
+        """Neuen Case zur Bearbeitung öffnen - automatisch im Edit-Modus"""
+        self.show_case_edit_view(case_index)
+        # Case-Editor in Edit-Modus setzen
+        self.case_editor.edit_mode = True
+        self.case_editor.update_ui_mode()
+        log_action("GUI_ACTION", f"Neuer Case {case_index} im Edit-Modus geöffnet")
     
     def generate_report(self):
         """PDF-Report generieren"""

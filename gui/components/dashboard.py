@@ -109,16 +109,14 @@ class DashboardComponent:
             self.parent.edit_case(case_index)
     
     def new_case(self):
-        """Neuen Case erstellen"""
-        dialog = CaseInputDialog(self.parent.root)
-        if dialog.result:
-            quelle, fundstellen = dialog.result
-            case = self.data_service.create_case(quelle, fundstellen)
+        """Neuen Case erstellen - direkt im Case-Editor"""
+        # Leeren Case erstellen und zum Editor wechseln
+        case_index = self.data_service.create_empty_case()
+        if case_index is not None:
             from utils.logger import log_action
-            from tkinter import messagebox
-            messagebox.showinfo("Erfolg", f"Neuer Case erstellt:\n{quelle}")
-            log_action("GUI_ACTION", f"Neuer Case erstellt: {quelle}")
-            self.refresh()
+            log_action("GUI_ACTION", f"Neuer leerer Case erstellt (Index: {case_index})")
+            # Direkt zum Case-Editor mit aktiviertem Edit-Modus wechseln
+            self.parent.edit_new_case(case_index)
     
     def refresh(self):
         """Dashboard aktualisieren"""

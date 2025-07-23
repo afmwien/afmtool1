@@ -1,33 +1,32 @@
 {
   "cases": [
     {
-      "quelle": "Handelsregister Wien",
+      "quelle": "Handelsregister Wien FP1",
       "fundstellen": "HRB 123456, Seite 45",
-      "afm_string": "{\"fundstellen\": \"HRB 123456, Seite 45\", \"quelle\": \"Handelsregister Wien\", \"zeitstempel\": [\"erfassung:2025-07-23T06:22:38.554612\", \"verarbeitung:2025-07-23T07:22:38.554612\", \"validierung:2025-07-23T08:22:38.554612\", \"archivierung:2025-07-23T09:22:38.554612\"]}",
+      "afm_string": "{\"fundstellen\": \"HRB 123456, Seite 45\", \"quelle\": \"Handelsregister Wien FP1\", \"zeitstempel\": [\"erfassung:2025-07-23T06:22:38.554612\"]}",
       "zeitstempel": [
-        "erfassung:2025-07-23T06:22:38.554612",
-        "verarbeitung:2025-07-23T07:22:38.554612",
-        "validierung:2025-07-23T08:22:38.554612",
-        "archivierung:2025-07-23T09:22:38.554612"
+        "erfassung:2025-07-23T06:22:38.554612"
       ]
     },
     {
-      "quelle": "Grundbuch Graz",
+      "quelle": "Grundbuch Graz Ost NEU",
       "fundstellen": "GB 789/2023, Einlage 12",
-      "afm_string": "{\"fundstellen\": \"GB 789/2023, Einlage 12\", \"quelle\": \"Grundbuch Graz\", \"zeitstempel\": [\"erfassung:2025-07-23T07:22:38.554612\", \"verarbeitung:2025-07-23T08:22:38.554612\", \"validierung:2025-07-23T09:22:38.554612\"]}",
+      "afm_string": "{\"fundstellen\": \"GB 789/2023, Einlage 12\", \"quelle\": \"Grundbuch Graz Ost NEU\", \"zeitstempel\": [\"erfassung:2025-07-23T07:22:38.554612\", \"verarbeitung:2025-07-23T08:22:38.554612\", \"validierung:2025-07-23T09:22:38.554612\", \"archivierung:2025-07-23T13:48:59.876489\"]}",
       "zeitstempel": [
         "erfassung:2025-07-23T07:22:38.554612",
         "verarbeitung:2025-07-23T08:22:38.554612",
-        "validierung:2025-07-23T09:22:38.554612"
+        "validierung:2025-07-23T09:22:38.554612",
+        "archivierung:2025-07-23T13:48:59.876489"
       ]
     },
     {
       "quelle": "Firmenbuch Linz",
       "fundstellen": "FN 456789x, Auszug vom 15.07.2025",
-      "afm_string": "{\"fundstellen\": \"FN 456789x, Auszug vom 15.07.2025\", \"quelle\": \"Firmenbuch Linz\", \"zeitstempel\": [\"erfassung:2025-07-23T08:22:38.554612\", \"verarbeitung:2025-07-23T09:22:38.554612\"]}",
+      "afm_string": "{\"fundstellen\": \"FN 456789x, Auszug vom 15.07.2025\", \"quelle\": \"Firmenbuch Linz\", \"zeitstempel\": [\"erfassung:2025-07-23T08:22:38.554612\", \"verarbeitung:2025-07-23T14:04:52.919661\", \"validierung:2025-07-23T14:04:54.419671\"]}",
       "zeitstempel": [
         "erfassung:2025-07-23T08:22:38.554612",
-        "verarbeitung:2025-07-23T09:22:38.554612"
+        "verarbeitung:2025-07-23T14:04:52.919661",
+        "validierung:2025-07-23T14:04:54.419671"
       ]
     },
     {
@@ -70,12 +69,13 @@
       ]
     },
     {
-      "quelle": "www.sp-r.at",
-      "fundstellen": "www.irgendwoonline.at/bild.jpg",
-      "afm_string": "{\"fundstellen\": \"www.irgendwoonline.at/bild.jpg\", \"quelle\": \"www.sp-r.at\", \"zeitstempel\": [\"erfassung:2025-07-23T11:54:57.144836\", \"validierung:2025-07-23T11:55:39.138413\"]}",
+      "quelle": "Test neuer Fall1",
+      "fundstellen": "sehen wir dann eh",
+      "afm_string": "{\"fundstellen\": \"sehen wir dann eh\", \"quelle\": \"Test neuer Fall1\", \"zeitstempel\": [\"erfassung:2025-07-23T14:53:06.577422\", \"verarbeitung:2025-07-23T14:53:26.154872\", \"validierung:2025-07-23T14:53:41.237564\"]}",
       "zeitstempel": [
-        "erfassung:2025-07-23T11:54:57.144836",
-        "validierung:2025-07-23T11:55:39.138413"
+        "erfassung:2025-07-23T14:53:06.577422",
+        "verarbeitung:2025-07-23T14:53:26.154872",
+        "validierung:2025-07-23T14:53:41.237564"
       ]
     }
   ]
