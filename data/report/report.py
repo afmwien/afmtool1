@@ -16,8 +16,10 @@ from reportlab.lib import colors
 
 class AFMReporter:
     def __init__(self):
-        self.data_dir = Path("data")
-        self.report_dir = self.data_dir / "temp_reports"
+        # Pfad relativ zum Projekt-Root (zwei Ebenen hoch vom report-Verzeichnis)
+        self.project_root = Path(__file__).parent.parent.parent
+        self.data_dir = self.project_root / "data"
+        self.report_dir = Path(__file__).parent / "temp_reports"
         self.databases = ["cases.json"]
         
     def get_database_overview(self):
@@ -216,9 +218,8 @@ class AFMReporter:
         # Automatische Datei-Erkennung im Hauptverzeichnis
         main_files = []
         try:
-            import os
-            project_root = Path(".")
-            for file in project_root.iterdir():
+            # Relative zum Projekt-Root (nicht zum aktuellen Verzeichnis)
+            for file in self.project_root.iterdir():
                 if file.is_file() and file.suffix in ['.py', '.txt', '.md']:
                     main_files.append(file.name)
         except:
@@ -246,7 +247,7 @@ class AFMReporter:
         # Utils Dateien automatisch erkennen
         utils_files = []
         try:
-            utils_path = Path("utils")
+            utils_path = self.project_root / "utils"
             if utils_path.exists():
                 for file in utils_path.iterdir():
                     if file.is_file() and file.suffix == '.py':
@@ -266,13 +267,20 @@ class AFMReporter:
         # Automatische Erkennung aller JSON-Dateien und Log-Dateien
         data_files = []
         try:
-            data_path = Path("data")
-            if data_path.exists():
-                for file in data_path.iterdir():
+            if self.data_dir.exists():
+                for file in self.data_dir.iterdir():
                     if file.is_file() and file.suffix in ['.json', '.log']:
                         data_files.append(file.name)
+            
+            # Auch im logs-Verzeichnis nach Log-Dateien suchen
+            logs_dir = self.project_root / "logs"
+            if logs_dir.exists():
+                for file in logs_dir.iterdir():
+                    if file.is_file() and file.suffix == '.log':
+                        data_files.append(f"logs/{file.name}")
+                        
         except:
-            data_files = ['cases.json', 'afmtool.log']
+            data_files = ['cases.json', 'logs/afmtool.log']
         
         for i, file in enumerate(data_files[:4]):  # Max 4 Dateien
             color = 'red' if file.endswith('.json') else 'blue'
@@ -295,7 +303,7 @@ class AFMReporter:
         # Test Dateien automatisch erkennen
         test_files = []
         try:
-            test_path = Path("test")
+            test_path = self.project_root / "test"
             if test_path.exists():
                 for file in test_path.iterdir():
                     if file.is_file() and file.suffix == '.py':

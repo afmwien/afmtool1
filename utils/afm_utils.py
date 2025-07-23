@@ -1,9 +1,10 @@
 """
 AFMTool1 - Modulare AFM String Utilities
-Vollständig modulare AFM String-Funktionen für dynamische Spalten
+Vollständig modulare AFM String-Funktionen für dynamische Spalten mit Zeitstempel-Unterstützung
 """
 
 import json
+import datetime
 from pathlib import Path
 
 def generate_afm_string_for_case(case_data, exclude_fields=None):
@@ -29,6 +30,59 @@ def generate_afm_string_for_case(case_data, exclude_fields=None):
     
     # Als JSON-String kodieren
     return json.dumps(afm_data, ensure_ascii=False, sort_keys=True)
+
+def add_timestamp_to_case(case_data, timestamp_type="erfassung"):
+    """
+    Fügt einen Zeitstempel zum Case hinzu
+    
+    Args:
+        case_data (dict): Case-Daten
+        timestamp_type (str): Art des Zeitstempels (erfassung, verarbeitung, validierung, archivierung)
+        
+    Returns:
+        dict: Aktualisierte Case-Daten mit neuem Zeitstempel
+    """
+    if "zeitstempel" not in case_data:
+        case_data["zeitstempel"] = []
+    
+    # Aktueller Zeitstempel im ISO-Format
+    current_timestamp = datetime.datetime.now().isoformat()
+    
+    # Zeitstempel mit Typ-Info hinzufügen
+    timestamp_entry = f"{timestamp_type}:{current_timestamp}"
+    case_data["zeitstempel"].append(timestamp_entry)
+    
+    return case_data
+
+def get_timestamps_from_case(case_data):
+    """
+    Extrahiert alle Zeitstempel aus einem Case
+    
+    Args:
+        case_data (dict): Case-Daten
+        
+    Returns:
+        list: Liste von Zeitstempel-Dictionaries mit Typ und Zeit
+    """
+    if "zeitstempel" not in case_data:
+        return []
+    
+    timestamps = []
+    for timestamp_entry in case_data["zeitstempel"]:
+        if ":" in timestamp_entry:
+            timestamp_type, timestamp_value = timestamp_entry.split(":", 1)
+            timestamps.append({
+                "type": timestamp_type,
+                "timestamp": timestamp_value
+            })
+        else:
+            # Fallback für einfache Zeitstempel
+            timestamps.append({
+                "type": "unknown",
+                "timestamp": timestamp_entry
+            })
+    
+    return timestamps
 
 def update_case_afm_string(case_data):
     """

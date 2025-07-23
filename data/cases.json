@@ -3,32 +3,80 @@
     {
       "quelle": "Handelsregister Wien",
       "fundstellen": "HRB 123456, Seite 45",
-      "afm_string": "{\"fundstellen\": \"HRB 123456, Seite 45\", \"quelle\": \"Handelsregister Wien\"}"
+      "afm_string": "{\"fundstellen\": \"HRB 123456, Seite 45\", \"quelle\": \"Handelsregister Wien\", \"zeitstempel\": [\"erfassung:2025-07-23T06:22:38.554612\", \"verarbeitung:2025-07-23T07:22:38.554612\", \"validierung:2025-07-23T08:22:38.554612\", \"archivierung:2025-07-23T09:22:38.554612\"]}",
+      "zeitstempel": [
+        "erfassung:2025-07-23T06:22:38.554612",
+        "verarbeitung:2025-07-23T07:22:38.554612",
+        "validierung:2025-07-23T08:22:38.554612",
+        "archivierung:2025-07-23T09:22:38.554612"
+      ]
     },
     {
       "quelle": "Grundbuch Graz",
       "fundstellen": "GB 789/2023, Einlage 12",
-      "afm_string": "{\"fundstellen\": \"GB 789/2023, Einlage 12\", \"quelle\": \"Grundbuch Graz\"}"
+      "afm_string": "{\"fundstellen\": \"GB 789/2023, Einlage 12\", \"quelle\": \"Grundbuch Graz\", \"zeitstempel\": [\"erfassung:2025-07-23T07:22:38.554612\", \"verarbeitung:2025-07-23T08:22:38.554612\", \"validierung:2025-07-23T09:22:38.554612\"]}",
+      "zeitstempel": [
+        "erfassung:2025-07-23T07:22:38.554612",
+        "verarbeitung:2025-07-23T08:22:38.554612",
+        "validierung:2025-07-23T09:22:38.554612"
+      ]
     },
     {
       "quelle": "Firmenbuch Linz",
       "fundstellen": "FN 456789x, Auszug vom 15.07.2025",
-      "afm_string": "{\"fundstellen\": \"FN 456789x, Auszug vom 15.07.2025\", \"quelle\": \"Firmenbuch Linz\"}"
+      "afm_string": "{\"fundstellen\": \"FN 456789x, Auszug vom 15.07.2025\", \"quelle\": \"Firmenbuch Linz\", \"zeitstempel\": [\"erfassung:2025-07-23T08:22:38.554612\", \"verarbeitung:2025-07-23T09:22:38.554612\"]}",
+      "zeitstempel": [
+        "erfassung:2025-07-23T08:22:38.554612",
+        "verarbeitung:2025-07-23T09:22:38.554612"
+      ]
     },
     {
       "quelle": "Vereinsregister Salzburg",
       "fundstellen": "ZVR 987654321, Protokoll Nr. 3",
-      "afm_string": "{\"fundstellen\": \"ZVR 987654321, Protokoll Nr. 3\", \"quelle\": \"Vereinsregister Salzburg\"}"
+      "afm_string": "{\"fundstellen\": \"ZVR 987654321, Protokoll Nr. 3\", \"quelle\": \"Vereinsregister Salzburg\", \"zeitstempel\": [\"erfassung:2025-07-23T06:22:38.554612\", \"verarbeitung:2025-07-23T07:22:38.554612\", \"validierung:2025-07-23T08:22:38.554612\", \"archivierung:2025-07-23T09:22:38.554612\"]}",
+      "zeitstempel": [
+        "erfassung:2025-07-23T06:22:38.554612",
+        "verarbeitung:2025-07-23T07:22:38.554612",
+        "validierung:2025-07-23T08:22:38.554612",
+        "archivierung:2025-07-23T09:22:38.554612"
+      ]
     },
     {
       "quelle": "Insolvenzregister Innsbruck",
       "fundstellen": "S 123/2025, Eröffnung am 20.07.2025",
-      "afm_string": "{\"fundstellen\": \"S 123/2025, Eröffnung am 20.07.2025\", \"quelle\": \"Insolvenzregister Innsbruck\"}"
+      "afm_string": "{\"fundstellen\": \"S 123/2025, Eröffnung am 20.07.2025\", \"quelle\": \"Insolvenzregister Innsbruck\", \"zeitstempel\": [\"erfassung:2025-07-23T08:22:38.554612\", \"verarbeitung:2025-07-23T09:22:38.554612\"]}",
+      "zeitstempel": [
+        "erfassung:2025-07-23T08:22:38.554612",
+        "verarbeitung:2025-07-23T09:22:38.554612"
+      ]
     },
     {
       "quelle": "Patentregister Wien",
       "fundstellen": "EP 789456 B1, veröffentlicht 23.07.2025",
-      "afm_string": "{\"fundstellen\": \"EP 789456 B1, veröffentlicht 23.07.2025\", \"quelle\": \"Patentregister Wien\"}"
+      "afm_string": "{\"fundstellen\": \"EP 789456 B1, veröffentlicht 23.07.2025\", \"quelle\": \"Patentregister Wien\", \"zeitstempel\": [\"erfassung:2025-07-23T06:22:38.554612\", \"verarbeitung:2025-07-23T07:22:38.554612\", \"validierung:2025-07-23T08:22:38.554612\", \"archivierung:2025-07-23T09:22:38.554612\"]}",
+      "zeitstempel": [
+        "erfassung:2025-07-23T06:22:38.554612",
+        "verarbeitung:2025-07-23T07:22:38.554612",
+        "validierung:2025-07-23T08:22:38.554612",
+        "archivierung:2025-07-23T09:22:38.554612"
+      ]
+    },
+    {
+      "quelle": "cd \"c:\\Users\\Pitner\\OneDrive - Steinmayr & Pitner Rechtsanwälte GmbH\\Desktop\\amfware\\afmtool\"; python -c \"from utils.logger import log_action; log_action('MANUAL_ENTRY', 'Template-freies Manual Entry System implementiert - direkte Case-Eingabe aktiv')\"",
+      "fundstellen": "cd \"c:\\Users\\Pitner\\OneDrive - Steinmayr & Pitner Rechtsanwälte GmbH\\Desktop\\amfware\\afmtool\\data\\workflow\\01_intake\\manual\"; python test_manual_entry.py",
+      "afm_string": "{\"fundstellen\": \"cd \\\"c:\\\\Users\\\\Pitner\\\\OneDrive - Steinmayr & Pitner Rechtsanwälte GmbH\\\\Desktop\\\\amfware\\\\afmtool\\\\data\\\\workflow\\\\01_intake\\\\manual\\\"; python test_manual_entry.py\", \"quelle\": \"cd \\\"c:\\\\Users\\\\Pitner\\\\OneDrive - Steinmayr & Pitner Rechtsanwälte GmbH\\\\Desktop\\\\amfware\\\\afmtool\\\"; python -c \\\"from utils.logger import log_action; log_action('MANUAL_ENTRY', 'Template-freies Manual Entry System implementiert - direkte Case-Eingabe aktiv')\\\"\", \"zeitstempel\": [\"erfassung:2025-07-23T11:46:28.371382\"]}",
+      "zeitstempel": [
+        "erfassung:2025-07-23T11:46:28.371382"
+      ]
+    },
+    {
+      "quelle": "www.sp-r.at",
+      "fundstellen": "www.irgendwoonline.at/bild.jpg",
+      "afm_string": "{\"fundstellen\": \"www.irgendwoonline.at/bild.jpg\", \"quelle\": \"www.sp-r.at\", \"zeitstempel\": [\"erfassung:2025-07-23T11:54:57.144836\", \"validierung:2025-07-23T11:55:39.138413\"]}",
+      "zeitstempel": [
+        "erfassung:2025-07-23T11:54:57.144836",
+        "validierung:2025-07-23T11:55:39.138413"
+      ]
     }
   ]
 }
