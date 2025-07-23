@@ -1,0 +1,4 @@
+# AFMTool1 Log
+# Format: [TIMESTAMP] ACTION: Details
+[2025-07-23 08:12:18] START: AFMTool1 gestartet
+[2025-07-23 08:12:38] STOP: AFMTool1 beendet
