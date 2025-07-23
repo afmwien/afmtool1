@@ -17,7 +17,7 @@ def get_afm_string():
     """
     try:
         # cases.json laden
-        with open("../data/cases.json", 'r', encoding='utf-8') as f:
+        with open("data/cases.json", 'r', encoding='utf-8') as f:
             data = json.load(f)
         
         cases = data.get('cases', [])
@@ -45,7 +45,7 @@ def get_afm_string_with_metadata():
         dict: afm_string mit Index und Metadaten
     """
     try:
-        with open("../data/cases.json", 'r', encoding='utf-8') as f:
+        with open("data/cases.json", 'r', encoding='utf-8') as f:
             data = json.load(f)
         
         cases = data.get('cases', [])

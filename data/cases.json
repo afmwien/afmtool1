@@ -2,23 +2,33 @@
   "cases": [
     {
       "quelle": "Handelsregister Wien",
-      "fundstellen": "HRB 123456, Seite 45"
+      "fundstellen": "HRB 123456, Seite 45",
+      "afm_string": "{\"fundstellen\": \"HRB 123456, Seite 45\", \"quelle\": \"Handelsregister Wien\"}"
     },
     {
       "quelle": "Grundbuch Graz",
-      "fundstellen": "GB 789/2023, Einlage 12"
+      "fundstellen": "GB 789/2023, Einlage 12",
+      "afm_string": "{\"fundstellen\": \"GB 789/2023, Einlage 12\", \"quelle\": \"Grundbuch Graz\"}"
     },
     {
       "quelle": "Firmenbuch Linz",
-      "fundstellen": "FN 456789x, Auszug vom 15.07.2025"
+      "fundstellen": "FN 456789x, Auszug vom 15.07.2025",
+      "afm_string": "{\"fundstellen\": \"FN 456789x, Auszug vom 15.07.2025\", \"quelle\": \"Firmenbuch Linz\"}"
     },
     {
       "quelle": "Vereinsregister Salzburg",
-      "fundstellen": "ZVR 987654321, Protokoll Nr. 3"
+      "fundstellen": "ZVR 987654321, Protokoll Nr. 3",
+      "afm_string": "{\"fundstellen\": \"ZVR 987654321, Protokoll Nr. 3\", \"quelle\": \"Vereinsregister Salzburg\"}"
     },
     {
       "quelle": "Insolvenzregister Innsbruck",
-      "fundstellen": "CHECK: Test bestanden!"
+      "fundstellen": "S 123/2025, Eröffnung am 20.07.2025",
+      "afm_string": "{\"fundstellen\": \"S 123/2025, Eröffnung am 20.07.2025\", \"quelle\": \"Insolvenzregister Innsbruck\"}"
+    },
+    {
+      "quelle": "Patentregister Wien",
+      "fundstellen": "EP 789456 B1, veröffentlicht 23.07.2025",
+      "afm_string": "{\"fundstellen\": \"EP 789456 B1, veröffentlicht 23.07.2025\", \"quelle\": \"Patentregister Wien\"}"
     }
   ]
 }

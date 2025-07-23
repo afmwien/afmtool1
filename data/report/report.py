@@ -9,7 +9,7 @@ import datetime
 from pathlib import Path
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from reportlab.lib.pagesizes import A4, landscape
+from reportlab.lib.pagesizes import A4, landscape, A3
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
@@ -76,6 +76,105 @@ class AFMReporter:
         else:
             return {"type": type(data).__name__}
     
+    def calculate_optimal_pagesize_and_columns(self, headers):
+        """
+        Berechnet optimale Seitengröße und Spaltenbreiten basierend auf Überschriftenlänge
+        
+        Args:
+            headers: Liste der Spaltenüberschriften
+            
+        Returns:
+            tuple: (pagesize, spaltenbreiten)
+        """
+        # Minimale Breite pro Überschrift berechnen (ca. 8 Punkte pro Zeichen)
+        min_widths = []
+        for header in headers:
+            # Mindestbreite: Überschriftenlänge * 8 + 20 Punkte Padding
+            min_width = len(str(header)) * 8 + 20
+            min_widths.append(max(min_width, 60))  # Mindestens 60 Punkte
+        
+        total_min_width = sum(min_widths) + 100  # +100 für Ränder
+        
+        # Papierformat wählen basierend auf benötigter Breite
+        a4_landscape_width = landscape(A4)[0]  # ~842 Punkte
+        a3_landscape_width = landscape(A3)[0]  # ~1191 Punkte
+        
+        if total_min_width <= a4_landscape_width:
+            # A4 Querformat reicht aus
+            pagesize = landscape(A4)
+            available_width = a4_landscape_width - 100
+        elif total_min_width <= a3_landscape_width:
+            # A3 Querformat notwendig
+            pagesize = landscape(A3)
+            available_width = a3_landscape_width - 100
+        else:
+            # Noch größer: Custom Format
+            custom_width = total_min_width + 100
+            custom_height = landscape(A4)[1]  # Höhe von A4 beibehalten
+            pagesize = (custom_width, custom_height)
+            available_width = custom_width - 100
+        
+        # Spaltenbreiten proportional verteilen aber mindestens die berechnete Mindestbreite
+        total_min = sum(min_widths)
+        col_widths = []
+        for min_width in min_widths:
+            # Proportionale Verteilung der verfügbaren Breite
+            width = (min_width / total_min) * available_width
+            col_widths.append(max(width, min_width))
+        
+        return pagesize, col_widths
+
+    def optimize_table_for_landscape(self, table_data, max_width):
+        """
+        Optimiert Tabellendaten für Querformat-Darstellung
+        
+        Args:
+            table_data: Tabellendaten
+            max_width: Maximale verfügbare Breite
+            
+        Returns:
+            tuple: (optimierte_daten, spaltenbreiten)
+        """
+        if not table_data:
+            return table_data, []
+            
+        # Anzahl der Spalten bestimmen
+        num_cols = len(table_data[0]) if table_data else 0
+        
+        if num_cols <= 1:
+            return table_data, [max_width]
+        
+        # Spaltenbreiten intelligent verteilen
+        if num_cols <= 4:
+            # Wenige Spalten: gleichmäßig verteilen
+            col_width = max_width / num_cols
+            return table_data, [col_width] * num_cols
+        else:
+            # Viele Spalten: erste Spalte (Nr.) schmal, Rest gleichmäßig
+            nr_width = 50
+            remaining_width = max_width - nr_width
+            other_width = remaining_width / (num_cols - 1)
+            return table_data, [nr_width] + [other_width] * (num_cols - 1)
+
+    def truncate_text_to_column_width(self, text, max_chars):
+        """
+        Kürzt Text auf maximale Zeichenanzahl (abschneiden, nicht umbrechen)
+        
+        Args:
+            text: Text zum Kürzen
+            max_chars: Maximale Zeichenanzahl
+            
+        Returns:
+            str: Gekürzter Text
+        """
+        if not isinstance(text, str):
+            text = str(text)
+        
+        if len(text) <= max_chars:
+            return text
+        else:
+            return text[:max_chars-3] + "..."
+
     def get_database_data(self, db_name):
         """2. Tabellarische Auflistung aller Daten je Datenbank mit dynamischen Spalten"""
         db_path = self.data_dir / db_name
@@ -234,18 +333,20 @@ class AFMReporter:
         return chart_path
     
     def generate_pdf_report(self):
-        """PDF-Report generieren im Querformat - überschreibt alte Version"""
+        """PDF-Report generieren mit festem A3 Querformat - überschreibt alte Version"""
         # Fester Dateiname - wird überschrieben
         pdf_path = self.report_dir / "afmtool_report_latest.pdf"
         
-        doc = SimpleDocTemplate(str(pdf_path), pagesize=landscape(A4))
+        # Immer A3 Querformat verwenden
+        doc = SimpleDocTemplate(str(pdf_path), pagesize=landscape(A3))
         styles = getSampleStyleSheet()
         story = []
         
-        # Titel mit Zeitstempel
+        # Titel mit Zeitstempel - A3 Querformat
         timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        
         title = Paragraph("AFMTool1 - System Report", styles['Title'])
-        subtitle = Paragraph(f"Generiert am: {timestamp}", styles['Normal'])
+        subtitle = Paragraph(f"Generiert am: {timestamp} | Format: A3 Querformat", styles['Normal'])
         story.append(title)
         story.append(subtitle)
         story.append(Spacer(1, 20))
@@ -271,57 +372,89 @@ class AFMReporter:
         overview_table.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),  # Linksbündig
             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('FONTSIZE', (0, 0), (-1, 0), 12),  # Standard-Schriftgröße
+            ('FONTSIZE', (0, 1), (-1, -1), 10),  # Standard-Schriftgröße für Datenzeilen
             ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
             ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-            ('GRID', (0, 0), (-1, -1), 1, colors.black)
+            ('GRID', (0, 0), (-1, -1), 1, colors.black),
+            ('VALIGN', (0, 0), (-1, -1), 'TOP'),  # Vertikale Ausrichtung oben
         ]))
+        # A3 Querformat: Mehr Platz für Übersichtstabelle
+        a3_landscape_width = landscape(A3)[0] - 100  # Abzüglich Ränder
+        overview_table._argW = [a3_landscape_width * 0.25, a3_landscape_width * 0.15, 
+                               a3_landscape_width * 0.15, a3_landscape_width * 0.15, 
+                               a3_landscape_width * 0.3]  # Spaltenbreiten in Prozent
         
         story.append(overview_table)
         story.append(Spacer(1, 20))
         
-        # 2. Detaildaten mit dynamischen Spalten + AFM String
-        story.append(Paragraph("2. Cases-Datenbank Details", styles['Heading2']))
+        # 2. Detaildaten mit dynamischen Spalten (AFM String jetzt in jeder Zeile)
+        story.append(Paragraph("2. Cases-Datenbank Details (mit AFM Strings)", styles['Heading2']))
         cases_data, columns = self.get_database_data("cases.json")
         
         if cases_data and columns:
-            # AFM String für letzte Zeile berechnen
-            last_case = cases_data[-1]
-            afm_string = json.dumps(last_case, ensure_ascii=False)
+            # Für Detail-Tabelle: A3 Querformat mit optimalen Spaltenbreiten
+            headers = ['Nr.'] + [col.title() for col in columns]
+            optimal_pagesize, optimal_col_widths = self.calculate_optimal_pagesize_and_columns(headers)
             
-            # Dynamische Tabellen-Header + AFM String Spalte
-            cases_table_data = [['Nr.'] + [col.title() for col in columns] + ['AFM String']]
+            # Da wir A3 verwenden, haben wir mehr Platz - verwende A3-optimierte Spaltenbreiten
+            a3_landscape_width = landscape(A3)[0] - 100  # Verfügbare Breite
+            
+            # Spaltenbreiten für A3 neu berechnen
+            num_cols = len(headers)
+            if num_cols > 0:
+                base_width = a3_landscape_width / num_cols
+                # Erste Spalte (Nr.) etwas schmaler
+                col_widths = [base_width * 0.6] + [base_width * 1.1] * (num_cols - 1)
+                # Normalisieren damit Gesamtbreite stimmt
+                total_width = sum(col_widths)
+                optimal_col_widths = [(w / total_width) * a3_landscape_width for w in col_widths]
+            
+            # Info über verwendetes Format
+            story.append(Paragraph(f"Detail-Tabelle verwendet: A3 Querformat für {len(columns)} Spalten", styles['Normal']))
+            story.append(Spacer(1, 10))
+            
+            # Dynamische Tabellen-Header
+            cases_table_data = [headers]
+            
+            # Maximale Zeichenanzahl pro Spalte basierend auf Spaltenbreite berechnen
+            max_chars_per_column = []
+            for width in optimal_col_widths:
+                # Ca. 8 Punkte pro Zeichen, minus Padding
+                max_chars = max(int((width - 20) / 8), 5)  # Mindestens 5 Zeichen
+                max_chars_per_column.append(max_chars)
             
             for i, case in enumerate(cases_data, 1):
                 row = [str(i)]
-                for col in columns:
+                for j, col in enumerate(columns):
                     value = case.get(col, '-')
-                    # Lange Strings kürzen für bessere Darstellung
-                    if isinstance(value, str) and len(value) > 50:
-                        value = value[:47] + "..."
-                    row.append(str(value))
-                
-                # AFM String nur für letzte Zeile
-                if i == len(cases_data):
-                    row.append(afm_string[:50] + "..." if len(afm_string) > 50 else afm_string)
-                else:
-                    row.append('-')
+                    # Text auf Spaltenbreite kürzen (nicht umbrechen!)
+                    max_chars = max_chars_per_column[j + 1] if j + 1 < len(max_chars_per_column) else 20
+                    truncated_value = self.truncate_text_to_column_width(str(value), max_chars)
+                    row.append(truncated_value)
                     
                 cases_table_data.append(row)
             
+            # Tabelle erstellen mit optimalen Spaltenbreiten
             cases_table = Table(cases_table_data)
             cases_table.setStyle(TableStyle([
                 ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue),
                 ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-                ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                ('ALIGN', (0, 0), (-1, -1), 'LEFT'),  # Linksbündig
                 ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                ('FONTSIZE', (0, 0), (-1, 0), 10),
+                ('FONTSIZE', (0, 0), (-1, 0), 9),  # Schrift für Header
+                ('FONTSIZE', (0, 1), (-1, -1), 8),  # Schrift für Daten
                 ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
                 ('BACKGROUND', (0, 1), (-1, -1), colors.white),
-                ('GRID', (0, 0), (-1, -1), 1, colors.black)
+                ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                ('VALIGN', (0, 0), (-1, -1), 'TOP'),  # Vertikale Ausrichtung oben
+                # KEIN WORDWRAP - Text wird abgeschnitten!
             ]))
+            
+            # Optimale Spaltenbreiten setzen
+            cases_table._argW = optimal_col_widths
             
             story.append(cases_table)
                 
