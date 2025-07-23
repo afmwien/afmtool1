@@ -13,8 +13,8 @@ def main():
     
     while True:
         print("\n--- AFMTool1 ---")
-        print("1. Person hinzufügen")
-        print("2. Personen anzeigen")
+        print("1. Case hinzufügen")
+        print("2. Cases anzeigen")
         print("3. Beenden")
         
         choice = input("Wahl: ").strip()
@@ -23,14 +23,14 @@ def main():
             quelle = input("Quelle: ").strip()
             fundstellen = input("Fundstellen: ").strip()
             add_person(quelle, fundstellen)
-            log_action("ADD_PERSON", f"Quelle: {quelle}, Fundstellen: {fundstellen}")
-            print("Person hinzugefügt!")
+            log_action("ADD_CASE", f"Quelle: {quelle}, Fundstellen: {fundstellen}")
+            print("Case hinzugefügt!")
             
         elif choice == "2":
             data = load_database()
-            print(f"\nGefunden: {len(data['persones'])} Personen")
-            for i, person in enumerate(data['persones'], 1):
-                print(f"{i}. Quelle: {person['quelle']}, Fundstellen: {person['fundstellen']}")
+            print(f"\nGefunden: {len(data['cases'])} Cases")
+            for i, case in enumerate(data['cases'], 1):
+                print(f"{i}. Quelle: {case['quelle']}, Fundstellen: {case['fundstellen']}")
                 
         elif choice == "3":
             log_action("STOP", "AFMTool1 beendet")
