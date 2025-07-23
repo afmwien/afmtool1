@@ -1,5 +1,3 @@
-# test_quality.py
-
 """
 Testskript für AFMTool1
 Punkt 1: Suche nach überflüssigem/nicht mehr gebrauchtem Code (aktiv)
@@ -95,4 +93,3 @@ def test_web_compatibility():
 
 # -------------------
 # Zum Starten: pytest test_quality.py
-# Schalte weitere Tests frei, indem du die entsprechenden Blöcke einkommentierst.
