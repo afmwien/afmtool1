@@ -162,20 +162,25 @@ class AFMToolGUI:
     def generate_report(self):
         """PDF-Report generieren"""
         try:
-            # Import des Report-Moduls
-            report_path = self.cases_file.parent / "report"
-            if str(report_path) not in sys.path:
-                sys.path.append(str(report_path))
+            # Import des Report-Moduls mit absolutem Pfad
+            report_module_path = self.cases_file.parent / "report" / "report.py"
             
-            from report import AFMReporter
-            
-            # Reporter erstellen und PDF generieren
-            reporter = AFMReporter()
-            pdf_path = reporter.generate_pdf_report()
-            
-            messagebox.showinfo("Report", f"PDF-Report erfolgreich generiert!\n\nDatei: {pdf_path.name}")
-            log_action("GUI_ACTION", f"PDF-Report generiert: {pdf_path}")
-            
+            if report_module_path.exists():
+                import importlib.util
+                spec = importlib.util.spec_from_file_location("report", report_module_path)
+                report_module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(report_module)
+                
+                # Reporter erstellen und PDF generieren
+                reporter = report_module.AFMReporter()
+                pdf_path = reporter.generate_pdf_report()
+                
+                messagebox.showinfo("Report", f"PDF-Report erfolgreich generiert!\n\nDatei: {pdf_path.name}")
+                log_action("GUI_ACTION", f"PDF-Report generiert: {pdf_path}")
+            else:
+                messagebox.showerror("Fehler", "Report-Modul nicht gefunden!")
+                log_action("GUI_ERROR", "Report-Modul nicht gefunden")
+
         except Exception as e:
             messagebox.showerror("Report Fehler", f"Fehler beim Generieren des Reports:\n{str(e)}")
             log_action("GUI_ERROR", f"Report-Fehler: {str(e)}")

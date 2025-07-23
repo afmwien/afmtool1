@@ -306,10 +306,14 @@ class AFMReporter:
             test_path = self.project_root / "test"
             if test_path.exists():
                 for file in test_path.iterdir():
-                    if file.is_file() and file.suffix == '.py':
+                    if file.is_file() and file.suffix == '.py' and file.name != '__init__.py':
                         test_files.append(file.name)
         except:
-            test_files = ['afm_string_handler.py', 'simple_afm.py']
+            test_files = []
+        
+        # Falls keine Test-Dateien vorhanden, zeige Platzhalter
+        if not test_files:
+            test_files = ['[Keine Test-Dateien]']
         
         for i, file in enumerate(test_files[:3]):
             ax.text(4, 3.9 - i*0.25, file, ha='center', va='center', fontsize=8)
