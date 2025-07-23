@@ -127,6 +127,9 @@ class DataService:
     
     def create_empty_case(self):
         """Leeren Case für manuelle Eingabe erstellen"""
+        # Erst alle wirklich leeren Cases bereinigen
+        self.cleanup_empty_cases()
+        
         cases = self.get_cases()
         new_case = {
             "quelle": "",
@@ -142,6 +145,20 @@ class DataService:
         
         # Index des neuen Cases zurückgeben
         return len(cases) - 1
+    
+    def cleanup_empty_cases(self):
+        """Entfernt alle Cases mit leeren quelle UND fundstellen Feldern"""
+        cases = self.get_cases()
+        
+        # Nur Cases behalten die mindestens ein gefülltes Feld haben
+        cleaned_cases = [
+            case for case in cases 
+            if case.get('quelle', '').strip() or case.get('fundstellen', '').strip()
+        ]
+        
+        # Nur speichern wenn sich was geändert hat
+        if len(cleaned_cases) != len(cases):
+            self._save_cases({"cases": cleaned_cases})
     
     def _save_cases(self, data):
         """Cases speichern"""

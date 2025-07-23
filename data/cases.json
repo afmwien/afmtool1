@@ -61,11 +61,12 @@
       ]
     },
     {
-      "quelle": "cd \"c:\\Users\\Pitner\\OneDrive - Steinmayr & Pitner Rechtsanwälte GmbH\\Desktop\\amfware\\afmtool\"; python -c \"from utils.logger import log_action; log_action('MANUAL_ENTRY', 'Template-freies Manual Entry System implementiert - direkte Case-Eingabe aktiv')\"",
-      "fundstellen": "cd \"c:\\Users\\Pitner\\OneDrive - Steinmayr & Pitner Rechtsanwälte GmbH\\Desktop\\amfware\\afmtool\\data\\workflow\\01_intake\\manual\"; python test_manual_entry.py",
-      "afm_string": "{\"fundstellen\": \"cd \\\"c:\\\\Users\\\\Pitner\\\\OneDrive - Steinmayr & Pitner Rechtsanwälte GmbH\\\\Desktop\\\\amfware\\\\afmtool\\\\data\\\\workflow\\\\01_intake\\\\manual\\\"; python test_manual_entry.py\", \"quelle\": \"cd \\\"c:\\\\Users\\\\Pitner\\\\OneDrive - Steinmayr & Pitner Rechtsanwälte GmbH\\\\Desktop\\\\amfware\\\\afmtool\\\"; python -c \\\"from utils.logger import log_action; log_action('MANUAL_ENTRY', 'Template-freies Manual Entry System implementiert - direkte Case-Eingabe aktiv')\\\"\", \"zeitstempel\": [\"erfassung:2025-07-23T11:46:28.371382\"]}",
+      "quelle": "https://www.sp-r.at/wp-content/uploads/wien-1-1200x1200.jpg",
+      "fundstellen": "\"C:\\Users\\Pitner\\OneDrive - Steinmayr & Pitner Rechtsanwälte GmbH\\Desktop\\amfware\\afmtool\\data\\testbilder\\starmayr-steinmayr-pitner-004-web-1500x760.jpg\"",
+      "afm_string": "{\"fundstellen\": \"\\\"C:\\\\Users\\\\Pitner\\\\OneDrive - Steinmayr & Pitner Rechtsanwälte GmbH\\\\Desktop\\\\amfware\\\\afmtool\\\\data\\\\testbilder\\\\starmayr-steinmayr-pitner-004-web-1500x760.jpg\\\"\", \"quelle\": \"https://www.sp-r.at/wp-content/uploads/wien-1-1200x1200.jpg\", \"zeitstempel\": [\"erfassung:2025-07-23T11:46:28.371382\", \"verarbeitung:2025-07-23T15:40:03.619766\"]}",
       "zeitstempel": [
-        "erfassung:2025-07-23T11:46:28.371382"
+        "erfassung:2025-07-23T11:46:28.371382",
+        "verarbeitung:2025-07-23T15:40:03.619766"
       ]
     },
     {
@@ -76,6 +77,24 @@
         "erfassung:2025-07-23T14:53:06.577422",
         "verarbeitung:2025-07-23T14:53:26.154872",
         "validierung:2025-07-23T14:53:41.237564"
+      ]
+    },
+    {
+      "quelle": "test",
+      "fundstellen": "\"C:\\Users\\Pitner\\Downloads\\2708921_opener_1042885_windkraftbefragung_ktn_vfgh_row.jpg\"",
+      "afm_string": "{\"fundstellen\": \"\\\"C:\\\\Users\\\\Pitner\\\\Downloads\\\\2708921_opener_1042885_windkraftbefragung_ktn_vfgh_row.jpg\\\"\", \"quelle\": \"test\", \"zeitstempel\": [\"erfassung:2025-07-23T18:30:26.340948\", \"verarbeitung:2025-07-23T18:30:34.007588\"]}",
+      "zeitstempel": [
+        "erfassung:2025-07-23T18:30:26.340948",
+        "verarbeitung:2025-07-23T18:30:34.007588"
+      ]
+    },
+    {
+      "quelle": "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1J7UbT.img?w=768&h=576&m=6",
+      "fundstellen": "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1BtF3F.img?w=360&h=480&m=6&x=148&y=160&s=75&d=75",
+      "afm_string": "{\"fundstellen\": \"https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1BtF3F.img?w=360&h=480&m=6&x=148&y=160&s=75&d=75\", \"quelle\": \"https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1J7UbT.img?w=768&h=576&m=6\", \"zeitstempel\": [\"erfassung:2025-07-23T18:37:11.151875\", \"verarbeitung:2025-07-23T18:37:20.940065\"]}",
+      "zeitstempel": [
+        "erfassung:2025-07-23T18:37:11.151875",
+        "verarbeitung:2025-07-23T18:37:20.940065"
       ]
     }
   ]

@@ -16,6 +16,11 @@ class CaseEditorComponent:
         self.selected_case_index = None
         self.edit_mode = False  # Toggle zwischen Anzeige- und Edit-Modus
         
+        # Tracking für ungespeicherte Änderungen
+        self.original_quelle = ""
+        self.original_fundstellen = ""
+        self.is_editing = False
+        
         # UI-Elemente
         self.quelle_label = None
         self.quelle_entry = None
@@ -93,7 +98,10 @@ class CaseEditorComponent:
         action_frame.pack(fill="x", pady=(20, 0))
         
         ttk.Button(action_frame, text="🔙 Zurück zum Dashboard", 
-                  command=self.parent.show_dashboard_view).pack(side="left")
+                  command=self.on_back_to_dashboard).pack(side="left")
+        
+        ttk.Button(action_frame, text="🖼️ Bildvergleich", 
+                  command=self.open_image_comparison).pack(side="left", padx=(10, 0))
         
         # Edit-Modus Buttons
         self.edit_button = ttk.Button(action_frame, text="✏️ Bearbeiten", 
@@ -164,6 +172,12 @@ class CaseEditorComponent:
         """Case laden und anzeigen"""
         self.selected_case_index = case_index
         self.edit_mode = False  # Immer im Anzeige-Modus starten
+        
+        # Edit-Status zurücksetzen beim Laden
+        self.is_editing = False
+        self.original_quelle = ""
+        self.original_fundstellen = ""
+        
         cases = self.data_service.get_cases()
         if case_index >= len(cases):
             return
@@ -385,6 +399,15 @@ class CaseEditorComponent:
     def toggle_edit_mode(self):
         """Zwischen Anzeige- und Edit-Modus wechseln"""
         self.edit_mode = not self.edit_mode
+        
+        # Tracking für Änderungen setzen
+        if self.edit_mode:
+            self.is_editing = True
+            self.original_quelle = self.quelle_entry.get().strip() if self.quelle_entry else ""
+            self.original_fundstellen = self.fundstellen_entry.get().strip() if self.fundstellen_entry else ""
+        else:
+            self.is_editing = False
+            
         self.update_ui_mode()
     
     def update_ui_mode(self):
@@ -426,6 +449,11 @@ class CaseEditorComponent:
             self.advance_button.config(state="disabled")
             self.delete_button.config(state="disabled")
             
+            # Edit-Status zurücksetzen
+            self.is_editing = False
+            self.original_quelle = ""
+            self.original_fundstellen = ""
+            
             self.edit_button.config(text="✏️ Bearbeiten")
     
     def save_changes(self):
@@ -446,8 +474,8 @@ class CaseEditorComponent:
             new_quelle = self.quelle_entry.get().strip()
             new_fundstellen = self.fundstellen_entry.get().strip()
             
-            if not new_quelle or not new_fundstellen:
-                messagebox.showwarning("Eingabe", "Quelle und Fundstellen dürfen nicht leer sein!")
+            if not new_quelle and not new_fundstellen:
+                messagebox.showwarning("Eingabe", "Mindestens Quelle oder Fundstellen müssen eingegeben werden!")
                 return
             
             # Prüfen ob sich die Werte geändert haben
@@ -478,6 +506,9 @@ class CaseEditorComponent:
                 
                 # Zurück zum Anzeige-Modus
                 self.edit_mode = False
+                self.is_editing = False
+                self.original_quelle = ""
+                self.original_fundstellen = ""
                 self.refresh()
                 
                 # Logging
@@ -519,6 +550,56 @@ class CaseEditorComponent:
         # Zurück zum Anzeige-Modus
         self.edit_mode = False
         self.update_ui_mode()
+    
+    def open_image_comparison(self):
+        """Bildvergleich für aktuellen Case öffnen"""
+        if self.selected_case_index is not None:
+            cases = self.data_service.get_cases()
+            if self.selected_case_index < len(cases):
+                case = cases[self.selected_case_index]
+                self.parent.show_image_viewer_with_case(case)
+    
+    def has_unsaved_changes(self):
+        """Prüft ob ungespeicherte Änderungen vorhanden sind"""
+        # Sicherheits-Checks
+        if (not self.is_editing or 
+            self.selected_case_index is None or 
+            not self.quelle_entry or 
+            not self.fundstellen_entry):
+            return False
+            
+        try:
+            current_quelle = self.quelle_entry.get().strip()
+            current_fundstellen = self.fundstellen_entry.get().strip()
+            
+            return (current_quelle != self.original_quelle or 
+                    current_fundstellen != self.original_fundstellen)
+        except:
+            # Bei Fehlern sicherheitshalber False zurückgeben
+            return False
+
+    def on_back_to_dashboard(self):
+        """Zurück zum Dashboard mit Unsaved Changes Check"""
+        if self.has_unsaved_changes():
+            from tkinter import messagebox
+            result = messagebox.askyesnocancel(
+                "Ungespeicherte Änderungen",
+                "Sie haben ungespeicherte Änderungen.\n\n"
+                "Speichern: Ja\n"
+                "Verwerfen: Nein\n"
+                "Abbrechen: Abbruch"
+            )
+            
+            if result is True:  # Ja - Speichern
+                self.save_changes()
+            elif result is False:  # Nein - Verwerfen
+                self.is_editing = False
+                self.original_quelle = ""
+                self.original_fundstellen = ""
+            else:  # None - Abbrechen
+                return
+                
+        self.parent.show_dashboard_view()
     
     def show(self, case_index):
         """Case-Editor anzeigen"""

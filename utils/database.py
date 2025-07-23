@@ -19,23 +19,6 @@ def save_database(data):
     with open(DATABASE_PATH, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
-def add_person(quelle, fundstellen):
-    """Case hinzufügen mit automatischem AFM String (vollständig modular)"""
-    data = load_database()
-    
-    # Case mit Grunddaten erstellen
-    case = {
-        "quelle": quelle,
-        "fundstellen": fundstellen
-    }
-    
-    # AFM String automatisch generieren (modular für alle Spalten)
-    case_with_afm = update_case_afm_string(case)
-    
-    data["cases"].append(case_with_afm)
-    save_database(data)
-    return case_with_afm
-
 def add_case_with_fields(case_data):
     """
     Case mit beliebigen Feldern hinzufügen (vollständig modular)

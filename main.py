@@ -3,7 +3,7 @@
 AFMTool1 - Minimales Python Tool
 """
 
-from utils.database import add_person, load_database
+from utils.database import load_database
 from utils.logger import log_action
 
 def main():
@@ -20,11 +20,7 @@ def main():
         choice = input("Wahl: ").strip()
         
         if choice == "1":
-            quelle = input("Quelle: ").strip()
-            fundstellen = input("Fundstellen: ").strip()
-            add_person(quelle, fundstellen)
-            log_action("ADD_CASE", f"Quelle: {quelle}, Fundstellen: {fundstellen}")
-            print("Case hinzugefügt!")
+            print("❌ CLI Case-Erstellung entfernt - verwende GUI!")
             
         elif choice == "2":
             data = load_database()

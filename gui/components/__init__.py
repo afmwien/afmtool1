@@ -1,6 +1,6 @@
 """GUI Komponenten für AFMTool1"""
 from .dashboard import DashboardComponent
 from .case_editor import CaseEditorComponent
-from .dialogs import CaseInputDialog
+from .image_viewer import ImageViewerComponent
 
-__all__ = ['DashboardComponent', 'CaseEditorComponent', 'CaseInputDialog']
+__all__ = ['DashboardComponent', 'CaseEditorComponent', 'ImageViewerComponent']
