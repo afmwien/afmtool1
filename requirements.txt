@@ -4,3 +4,6 @@
 # Reporting Dependencies
 matplotlib>=3.7.0
 reportlab>=4.0.0
+
+# Testing Dependencies
+pytest>=7.0.0
