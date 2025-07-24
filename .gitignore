@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+.Python
+env/
+venv/
+.venv/
+.env
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# AFMTool - Spezifische Ausschlüsse
+data/report/temp_reports/
+data/report/__pycache__/
+gui/__pycache__/
+gui/components/__pycache__/
+gui/services/__pycache__/
+
+# Data-Verzeichnisse wieder einschließen
+!data/
+!data/report/
+!data/report/**
+# Aber temp_reports weiterhin ausschließen
+data/report/temp_reports/
