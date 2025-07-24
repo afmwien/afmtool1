@@ -7,6 +7,11 @@ Keep code simple and focused on essential functionality only.
 Refrain always from comments and display only a progress indicator with estimated remaining 
 time.
 
+## AFM System Logic (CRITICAL - Always Remember)
+✅ **Eindeutige Identifikation**: Jeder Case durch `erfassung`-Zeitstempel eindeutig definiert und vollständig eigenständig
+✅ **Fallnummer als Gruppierungs-Label**: `fallnummer` ist frei wählbar - mehrere Cases können dieselbe haben  
+✅ **GUI/Web-Funktionalität**: Gruppierung nach `fallnummer` ermöglicht zusammenhängende Darstellung in GUI und zukünftiger Webanwendung
+
 ## Response Format
 - NO long summaries or detailed explanations
 - NO extensive bullet points or lists

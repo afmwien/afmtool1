@@ -14,6 +14,20 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, 
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 
+# Try/Except Import mit Fallback für Fallnummer-Modul
+try:
+    import sys
+    # Korrekter Pfad zu utils (3 Ebenen hoch vom report-Verzeichnis)
+    utils_path = str(Path(__file__).parent.parent.parent / "utils")
+    if utils_path not in sys.path:
+        sys.path.insert(0, utils_path)
+    from fallnummer_verknuepfung import find_fallnummer_groups
+    USE_FALLNUMMER_MODULE = True
+    print("✅ Fallnummer-Modul geladen")
+except ImportError as e:
+    print(f"⚠️ Fallback: Verwende eingebaute Gruppierung ({e})")
+    USE_FALLNUMMER_MODULE = False
+
 class AFMReporter:
     def __init__(self):
         # Pfad relativ zum Projekt-Root (zwei Ebenen hoch vom report-Verzeichnis)
@@ -407,28 +421,45 @@ class AFMReporter:
         cases_data, columns = self.get_database_data("cases.json")
         
         if cases_data and columns:
-            # Gruppiere Cases nach Fallnummer-Prefix
-            groups = {}
-            for case in cases_data:
-                fallnummer = case.get('fallnummer', '')
-                if '-' in fallnummer:
-                    prefix = fallnummer.split('-')[0]
-                    if prefix not in groups:
-                        groups[prefix] = []
-                    groups[prefix].append(case)
+            # Gruppiere Cases mit Try/Except Fallback
+            if USE_FALLNUMMER_MODULE:
+                # Neue AFM-konforme Gruppierung
+                fallnummer_data = find_fallnummer_groups(cases_data)
+                groups = {}
+                for fallnummer in fallnummer_data["exakte_gruppen"].keys():
+                    groups[fallnummer] = [case for case in cases_data if case.get('fallnummer') == fallnummer]
+            else:
+                # Fallback: Alte eingebaute Logik
+                groups = {}
+                for case in cases_data:
+                    fallnummer = case.get('fallnummer', '')
+                    if fallnummer not in groups:
+                        groups[fallnummer] = []
+                    groups[fallnummer].append(case)
             
             # Erstelle doppelten Header: Gruppen-Header + Fallnummer-Header
             group_header = ['']  # Erste Spalte leer
-            fallnummer_header = ['Eigenschaft']
+            fallnummer_header = ['FallNr_client']
             
             sorted_cases = []
-            for prefix in sorted(groups.keys()):
-                group_cases = groups[prefix]
+            for fallnummer in sorted(groups.keys()):
+                group_cases = groups[fallnummer]
                 sorted_cases.extend(group_cases)
                 
-                # Gruppenheader über mehrere Spalten
-                group_header.extend([prefix] + [''] * (len(group_cases) - 1))
-                fallnummer_header.extend([case['fallnummer'] for case in group_cases])
+                # Gruppenheader nur bei mehreren Cases mit gleicher Fallnummer
+                if len(group_cases) > 1:
+                    group_header.extend([fallnummer] + [''] * (len(group_cases) - 1))
+                else:
+                    group_header.extend([''])
+                
+                # Case-Header mit UUID (erfassung-Zeitstempel)
+                for case in group_cases:
+                    erfassung_uuid = ""
+                    for ts in case['zeitstempel']:
+                        if ts.startswith('erfassung:'):
+                            erfassung_uuid = ts.split(':')[2]  # UUID-Teil
+                            break
+                    fallnummer_header.append(erfassung_uuid)
             
             # Beschränke auf 8 Fälle für A4-Querformat
             if len(sorted_cases) > 8:
@@ -446,11 +477,13 @@ class AFMReporter:
             story.append(Spacer(1, 10))
             
             # Datenzeilen: Eigenschaften als Zeilen, Fälle als Spalten
-            properties = ['Quelle', 'Fundstellen', 'Zeitschritte', 'AFM-Status']
+            properties = ['UUID', 'Quelle', 'Fundstellen', 'Zeitschritte', 'AFM-Status']
             for prop in properties:
                 row = [prop]
                 for case in sorted_cases:
-                    if prop == 'Quelle':
+                    if prop == 'UUID':
+                        row.append(case.get('fallnummer', '-'))
+                    elif prop == 'Quelle':
                         value = case.get('quelle', '-')
                         row.append(value[:12] + '...' if len(value) > 12 else value)
                     elif prop == 'Fundstellen':

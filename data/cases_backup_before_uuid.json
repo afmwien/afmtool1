@@ -1,0 +1,127 @@
+{
+  "cases": [
+    {
+      "quelle": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+      "fundstellen": "https://unsplash.com/photos/a-man-in-a-suit-and-tie-smiling-at-the-camera",
+      "fallnummer": "IMG-2025-001",
+      "zeitstempel": [
+        "erfassung:2025-07-24T06:47:52.193654:9057a7ba-d1f4-45f8-9b18-422f8293d762"
+      ],
+      "afm_string": "{\"quelle\": \"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800\",\"fundstellen\": \"https://unsplash.com/photos/a-man-in-a-suit-and-tie-smiling-at-the-camera\",\"fallnummer\": \"IMG-2025-001\",\"zeitstempel\": [\"erfassung:2025-07-24T06:47:52.193654:9057a7ba-d1f4-45f8-9b18-422f8293d762\"]}",
+      "uuid": "64AD0"
+    },
+    {
+      "quelle": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800",
+      "fundstellen": "https://unsplash.com/photos/person-holding-white-android-smartphone",
+      "fallnummer": "IMG-2025-001",
+      "zeitstempel": [
+        "erfassung:2025-07-24T07:47:52.193654:59ec6d86-87b8-43e5-a545-2d18e72172c4",
+        "verarbeitung:2025-07-24T08:47:52.193654:b79f7f9b-9803-4036-a632-45f9f46eac2f"
+      ],
+      "afm_string": "{\"quelle\": \"https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800\",\"fundstellen\": \"https://unsplash.com/photos/person-holding-white-android-smartphone\",\"fallnummer\": \"IMG-2025-001\",\"zeitstempel\": [\"erfassung:2025-07-24T07:47:52.193654:59ec6d86-87b8-43e5-a545-2d18e72172c4\",\"verarbeitung:2025-07-24T08:47:52.193654:b79f7f9b-9803-4036-a632-45f9f46eac2f\"]}",
+      "uuid": "A81B4"
+    },
+    {
+      "quelle": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800",
+      "fundstellen": "https://unsplash.com/photos/person-using-macbook-pro",
+      "fallnummer": "DOC-2025-003",
+      "zeitstempel": [
+        "erfassung:2025-07-24T08:47:52.193654:bc0f2760-c5ef-431c-a859-a1ee3d6b4d84",
+        "verarbeitung:2025-07-24T09:47:52.193654:c3d8e9f0-a1b2-4c5d-8e9f-123456789abc",
+        "freigabe:2025-07-24T10:47:52.193654:d4e9f0a1-b2c3-4d5e-9f0a-123456789def"
+      ],
+      "afm_string": "{\"quelle\": \"https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800\",\"fundstellen\": \"https://unsplash.com/photos/person-using-macbook-pro\",\"fallnummer\": \"DOC-2025-003\",\"zeitstempel\": [\"erfassung:2025-07-24T08:47:52.193654:bc0f2760-c5ef-431c-a859-a1ee3d6b4d84\",\"verarbeitung:2025-07-24T09:47:52.193654:c3d8e9f0-a1b2-4c5d-8e9f-123456789abc\",\"freigabe:2025-07-24T10:47:52.193654:d4e9f0a1-b2c3-4d5e-9f0a-123456789def\"]}",
+      "uuid": "60C14"
+    },
+    {
+      "quelle": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800",
+      "fundstellen": "https://unsplash.com/photos/macbook-pro-on-table-beside-white-ipad-and-cup",
+      "fallnummer": "DOC-2025-003",
+      "zeitstempel": [
+        "erfassung:2025-07-24T05:47:52.193654:12e055b0-c8e6-4853-95a6-39eb89cf0e9e",
+        "verarbeitung:2025-07-24T06:47:52.193654:23f166c1-d9f7-4964-a6b7-4afc9aed0f1f",
+        "freigabe:2025-07-24T07:47:52.193654:34g277d2-ea08-5a75-b7c8-5bfd0bfe1g2g",
+        "archiv:2025-07-24T08:47:52.193654:45h388e3-fb19-6b86-c8d9-6c0e1c0f2h3h"
+      ],
+      "afm_string": "{\"quelle\": \"https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800\",\"fundstellen\": \"https://unsplash.com/photos/macbook-pro-on-table-beside-white-ipad-and-cup\",\"fallnummer\": \"DOC-2025-003\",\"zeitstempel\": [\"erfassung:2025-07-24T05:47:52.193654:12e055b0-c8e6-4853-95a6-39eb89cf0e9e\",\"verarbeitung:2025-07-24T06:47:52.193654:23f166c1-d9f7-4964-a6b7-4afc9aed0f1f\",\"freigabe:2025-07-24T07:47:52.193654:34g277d2-ea08-5a75-b7c8-5bfd0bfe1g2g\",\"archiv:2025-07-24T08:47:52.193654:45h388e3-fb19-6b86-c8d9-6c0e1c0f2h3h\"]}",
+      "uuid": "151FC"
+    },
+    {
+      "quelle": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
+      "fundstellen": "https://unsplash.com/photos/monitor-showing-java-programming",
+      "fallnummer": "WEB-2025-005",
+      "zeitstempel": [
+        "erfassung:2025-07-24T09:47:52.193654:f7274f0b-d920-4fcd-a452-15321a6f013e",
+        "verarbeitung:2025-07-24T10:47:52.193654:0838501c-ea31-50de-b563-26432b7f124f"
+      ],
+      "afm_string": "{\"quelle\": \"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800\",\"fundstellen\": \"https://unsplash.com/photos/monitor-showing-java-programming\",\"fallnummer\": \"WEB-2025-005\",\"zeitstempel\": [\"erfassung:2025-07-24T09:47:52.193654:f7274f0b-d920-4fcd-a452-15321a6f013e\",\"verarbeitung:2025-07-24T10:47:52.193654:0838501c-ea31-50de-b563-26432b7f124f\"]}",
+      "uuid": "91D86"
+    },
+    {
+      "quelle": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800",
+      "fundstellen": "https://unsplash.com/photos/person-typing-on-computer-keyboard",
+      "fallnummer": "TEC-2025-006",
+      "zeitstempel": [
+        "erfassung:2025-07-24T04:47:52.193654:ee826412-bf34-452a-bb02-7928c83c757c",
+        "verarbeitung:2025-07-24T05:47:52.193654:ff937523-c045-563b-cc13-893ad94d868d",
+        "qualitaet:2025-07-24T06:47:52.193654:00a48634-d156-674c-dd24-9a4bea5e979e",
+        "freigabe:2025-07-24T07:47:52.193654:11b59745-e267-785d-ee35-ab5cfb6fa8af"
+      ],
+      "afm_string": "{\"quelle\": \"https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800\",\"fundstellen\": \"https://unsplash.com/photos/person-typing-on-computer-keyboard\",\"fallnummer\": \"TEC-2025-006\",\"zeitstempel\": [\"erfassung:2025-07-24T04:47:52.193654:ee826412-bf34-452a-bb02-7928c83c757c\",\"verarbeitung:2025-07-24T05:47:52.193654:ff937523-c045-563b-cc13-893ad94d868d\",\"qualitaet:2025-07-24T06:47:52.193654:00a48634-d156-674c-dd24-9a4bea5e979e\",\"freigabe:2025-07-24T07:47:52.193654:11b59745-e267-785d-ee35-ab5cfb6fa8af\"]}",
+      "uuid": "B5254"
+    },
+    {
+      "quelle": "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800",
+      "fundstellen": "https://unsplash.com/photos/person-holding-black-ipad-with-white-case",
+      "fallnummer": "MOB-2025-007",
+      "zeitstempel": [
+        "erfassung:2025-07-24T11:17:52.193654:bf527c3d-b44d-458f-bc94-528b80347493"
+      ],
+      "afm_string": "{\"quelle\": \"https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800\",\"fundstellen\": \"https://unsplash.com/photos/person-holding-black-ipad-with-white-case\",\"fallnummer\": \"MOB-2025-007\",\"zeitstempel\": [\"erfassung:2025-07-24T11:17:52.193654:bf527c3d-b44d-458f-bc94-528b80347493\"]}",
+      "uuid": "417FA"
+    },
+    {
+      "quelle": "https://images.unsplash.com/photo-1484807352052-23338990c6c6?w=800",
+      "fundstellen": "https://unsplash.com/photos/person-in-black-suit-holding-white-tablet-computer",
+      "fallnummer": "BIZ-2025-008",
+      "zeitstempel": [
+        "erfassung:2025-07-24T10:47:52.193654:9ee31a70-0dbb-4b03-ba97-f0fcc92fafcd",
+        "verarbeitung:2025-07-24T11:47:52.193654:aff42881-1ecc-5b14-cba8-01fd0a3fb0de",
+        "review:2025-07-24T12:47:52.193654:b0053992-2fdd-6c25-dcb9-120e1b40c1ef"
+      ],
+      "afm_string": "{\"quelle\": \"https://images.unsplash.com/photo-1484807352052-23338990c6c6?w=800\",\"fundstellen\": \"https://unsplash.com/photos/person-in-black-suit-holding-white-tablet-computer\",\"fallnummer\": \"BIZ-2025-008\",\"zeitstempel\": [\"erfassung:2025-07-24T10:47:52.193654:9ee31a70-0dbb-4b03-ba97-f0fcc92fafcd\",\"verarbeitung:2025-07-24T11:47:52.193654:aff42881-1ecc-5b14-cba8-01fd0a3fb0de\",\"review:2025-07-24T12:47:52.193654:b0053992-2fdd-6c25-dcb9-120e1b40c1ef\"]}",
+      "uuid": "5EDE3"
+    },
+    {
+      "quelle": "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800",
+      "fundstellen": "https://unsplash.com/photos/person-using-black-laptop-computer",
+      "fallnummer": "DEV-2025-009",
+      "zeitstempel": [
+        "erfassung:2025-07-24T11:02:52.193654:7f1ebc66-6212-4f20-94bb-ec6b0bc56317",
+        "entwicklung:2025-07-24T12:02:52.193654:802fc777-7323-5031-a5cc-fd7c1cd67428"
+      ],
+      "afm_string": "{\"quelle\": \"https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800\",\"fundstellen\": \"https://unsplash.com/photos/person-using-black-laptop-computer\",\"fallnummer\": \"DEV-2025-009\",\"zeitstempel\": [\"erfassung:2025-07-24T11:02:52.193654:7f1ebc66-6212-4f20-94bb-ec6b0bc56317\",\"entwicklung:2025-07-24T12:02:52.193654:802fc777-7323-5031-a5cc-fd7c1cd67428\"]}",
+      "uuid": "D0A02"
+    },
+    {
+      "quelle": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800",
+      "fundstellen": "https://unsplash.com/photos/macbook-air-on-grey-wooden-table",
+      "fallnummer": "SYS-2025-010",
+      "zeitstempel": [
+        "erfassung:2025-07-24T11:37:52.193654:e8523726-da02-4982-a414-be45a20873fb",
+        "analyse:2025-07-24T12:37:52.193654:f9634837-eb13-5a93-b525-f5568b9f84gc",
+        "optimierung:2025-07-24T13:37:52.193654:0a745948-fc24-6ba4-c636-0667ca0g95hd",
+        "deployment:2025-07-24T14:37:52.193654:1b856a59-0d35-7cb5-d747-177d8b1ha6ie"
+      ],
+      "afm_string": "{\"quelle\": \"https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800\",\"fundstellen\": \"https://unsplash.com/photos/macbook-air-on-grey-wooden-table\",\"fallnummer\": \"SYS-2025-010\",\"zeitstempel\": [\"erfassung:2025-07-24T11:37:52.193654:e8523726-da02-4982-a414-be45a20873fb\",\"analyse:2025-07-24T12:37:52.193654:f9634837-eb13-5a93-b525-f5568b9f84gc\",\"optimierung:2025-07-24T13:37:52.193654:0a745948-fc24-6ba4-c636-0667ca0g95hd\",\"deployment:2025-07-24T14:37:52.193654:1b856a59-0d35-7cb5-d747-177d8b1ha6ie\"]}",
+      "uuid": "C7038"
+    }
+  ],
+  "metadata": {
+    "version": "2.0",
+    "last_updated": "2025-07-24T14:00:00.000000",
+    "total_cases": 10,
+    "source_type": "image_database",
+    "description": "AFMTool1 Test Cases mit Unsplash Bildern und URLs"
+  }
+}

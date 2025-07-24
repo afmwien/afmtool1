@@ -1,110 +1,121 @@
 {
   "cases": [
     {
-      "quelle": "Handelsregister Wien",
-      "fundstellen": "HRB 234567, Seite 12",
       "fallnummer": "HR-2025-001",
+      "fundstellen": "HRB 234567, Seite 12",
+      "quelle": "Handelsregister Wien6",
       "zeitstempel": [
-        "erfassung:2025-07-24T06:47:52.193654:9057a7ba-d1f4-45f8-9b18-422f8293d762"
+        "erfassung:2025-07-24T06:47:52.193654:9057a7ba-d1f4-45f8-9b18-422f8293d762",
+        "verarbeitung:2025-07-24T16:27:16.960695:09f58f2c-b1a1-4861-8c09-197931140c2b"
       ],
-      "afm_string": "{\"quelle\": \"Handelsregister Wien\", \"fundstellen\": \"HRB 234567, Seite 12\", \"fallnummer\": \"HR-2025-001\", \"zeitstempel\": [\"erfassung:2025-07-24T06:47:52.193654:9057a7ba-d1f4-45f8-9b18-422f8293d762\"]}"
+      "afm_string": "{\"fallnummer\": \"HR-2025-001\", \"fundstellen\": \"HRB 234567, Seite 12\", \"quelle\": \"Handelsregister Wien6\", \"zeitstempel\": [\"erfassung:2025-07-24T06:47:52.193654:9057a7ba-d1f4-45f8-9b18-422f8293d762\", \"verarbeitung:2025-07-24T16:27:16.960695:09f58f2c-b1a1-4861-8c09-197931140c2b\"]}"
     },
     {
-      "quelle": "Grundbuch Innsbruck",
+      "fallnummer": "HR-2025-001",
       "fundstellen": "GB 456/2025, Einlage 8",
-      "fallnummer": "GB-2025-002",
+      "quelle": "Grundbuch Innsbruck",
       "zeitstempel": [
         "erfassung:2025-07-24T07:47:52.193654:59ec6d86-87b8-43e5-a545-2d18e72172c4",
         "verarbeitung:2025-07-24T08:47:52.193654:b79f7f9b-9803-4036-a632-45f9f46eac2f"
       ],
-      "afm_string": "{\"quelle\": \"Grundbuch Innsbruck\", \"fundstellen\": \"GB 456/2025, Einlage 8\", \"fallnummer\": \"GB-2025-002\", \"zeitstempel\": [\"erfassung:2025-07-24T07:47:52.193654:59ec6d86-87b8-43e5-a545-2d18e72172c4\", \"verarbeitung:2025-07-24T08:47:52.193654:b79f7f9b-9803-4036-a632-45f9f46eac2f\"]}"
+      "afm_string": "{\"fallnummer\": \"HR-2025-001\", \"fundstellen\": \"GB 456/2025, Einlage 8\", \"quelle\": \"Grundbuch Innsbruck\", \"zeitstempel\": [\"erfassung:2025-07-24T07:47:52.193654:59ec6d86-87b8-43e5-a545-2d18e72172c4\", \"verarbeitung:2025-07-24T08:47:52.193654:b79f7f9b-9803-4036-a632-45f9f46eac2f\"]}"
     },
     {
-      "quelle": "Firmenbuch Salzburg",
-      "fundstellen": "FN 789123z, Auszug 24.07.2025",
       "fallnummer": "FB-2025-003",
+      "fundstellen": "FN 789123z, Auszug 24.07.2025",
+      "quelle": "Firmenbuch Salzburg",
       "zeitstempel": [
         "erfassung:2025-07-24T08:47:52.193654:bc0f2760-c5ef-431c-a859-a1ee3d6b4d84",
         "verarbeitung:2025-07-24T09:47:52.193654:c4c16de3-e5b9-42e7-a369-0d824e9f81c8",
         "validierung:2025-07-24T10:47:52.193654:f95dd451-80e4-46f7-8477-b658b692e5e2"
       ],
-      "afm_string": "{\"quelle\": \"Firmenbuch Salzburg\", \"fundstellen\": \"FN 789123z, Auszug 24.07.2025\", \"fallnummer\": \"FB-2025-003\", \"zeitstempel\": [\"erfassung:2025-07-24T08:47:52.193654:bc0f2760-c5ef-431c-a859-a1ee3d6b4d84\", \"verarbeitung:2025-07-24T09:47:52.193654:c4c16de3-e5b9-42e7-a369-0d824e9f81c8\", \"validierung:2025-07-24T10:47:52.193654:f95dd451-80e4-46f7-8477-b658b692e5e2\"]}"
+      "afm_string": "{\"fallnummer\": \"FB-2025-003\", \"fundstellen\": \"FN 789123z, Auszug 24.07.2025\", \"quelle\": \"Firmenbuch Salzburg\", \"zeitstempel\": [\"erfassung:2025-07-24T08:47:52.193654:bc0f2760-c5ef-431c-a859-a1ee3d6b4d84\", \"verarbeitung:2025-07-24T09:47:52.193654:c4c16de3-e5b9-42e7-a369-0d824e9f81c8\", \"validierung:2025-07-24T10:47:52.193654:f95dd451-80e4-46f7-8477-b658b692e5e2\"]}"
     },
     {
-      "quelle": "Vereinsregister Wien",
+      "fallnummer": "FB-2025-003",
       "fundstellen": "ZVR 123456789, Protokoll Nr. 5",
-      "fallnummer": "VR-2025-004",
+      "quelle": "Vereinsregister Wien",
       "zeitstempel": [
         "erfassung:2025-07-24T05:47:52.193654:12e055b0-c8e6-4853-95a6-39eb89cf0e9e",
         "verarbeitung:2025-07-24T06:47:52.193654:3f252ffe-a21a-4042-9441-da57b9e524a5",
         "validierung:2025-07-24T07:47:52.193654:8b192f41-2dcf-4f5a-a492-7e880b962bf6",
         "archivierung:2025-07-24T10:47:52.193654:a19dd82f-096b-4330-ac8c-41f147da53e9"
       ],
-      "afm_string": "{\"quelle\": \"Vereinsregister Wien\", \"fundstellen\": \"ZVR 123456789, Protokoll Nr. 5\", \"fallnummer\": \"VR-2025-004\", \"zeitstempel\": [\"erfassung:2025-07-24T05:47:52.193654:12e055b0-c8e6-4853-95a6-39eb89cf0e9e\", \"verarbeitung:2025-07-24T06:47:52.193654:3f252ffe-a21a-4042-9441-da57b9e524a5\", \"validierung:2025-07-24T07:47:52.193654:8b192f41-2dcf-4f5a-a492-7e880b962bf6\", \"archivierung:2025-07-24T10:47:52.193654:a19dd82f-096b-4330-ac8c-41f147da53e9\"]}"
+      "afm_string": "{\"fallnummer\": \"FB-2025-003\", \"fundstellen\": \"ZVR 123456789, Protokoll Nr. 5\", \"quelle\": \"Vereinsregister Wien\", \"zeitstempel\": [\"erfassung:2025-07-24T05:47:52.193654:12e055b0-c8e6-4853-95a6-39eb89cf0e9e\", \"verarbeitung:2025-07-24T06:47:52.193654:3f252ffe-a21a-4042-9441-da57b9e524a5\", \"validierung:2025-07-24T07:47:52.193654:8b192f41-2dcf-4f5a-a492-7e880b962bf6\", \"archivierung:2025-07-24T10:47:52.193654:a19dd82f-096b-4330-ac8c-41f147da53e9\"]}"
     },
     {
-      "quelle": "Insolvenzregister Graz",
+      "fallnummer": "FB-2025-003",
       "fundstellen": "S 456/2025, Eröffnung 23.07.2025",
-      "fallnummer": "IN-2025-005",
+      "quelle": "Insolvenzregister Graz",
       "zeitstempel": [
         "erfassung:2025-07-24T09:47:52.193654:f7274f0b-d920-4fcd-a452-15321a6f013e",
         "verarbeitung:2025-07-24T10:47:52.193654:d56618bc-87b6-4c7e-9687-63cbf618aa4a"
       ],
-      "afm_string": "{\"quelle\": \"Insolvenzregister Graz\", \"fundstellen\": \"S 456/2025, Eröffnung 23.07.2025\", \"fallnummer\": \"IN-2025-005\", \"zeitstempel\": [\"erfassung:2025-07-24T09:47:52.193654:f7274f0b-d920-4fcd-a452-15321a6f013e\", \"verarbeitung:2025-07-24T10:47:52.193654:d56618bc-87b6-4c7e-9687-63cbf618aa4a\"]}"
+      "afm_string": "{\"fallnummer\": \"FB-2025-003\", \"fundstellen\": \"S 456/2025, Eröffnung 23.07.2025\", \"quelle\": \"Insolvenzregister Graz\", \"zeitstempel\": [\"erfassung:2025-07-24T09:47:52.193654:f7274f0b-d920-4fcd-a452-15321a6f013e\", \"verarbeitung:2025-07-24T10:47:52.193654:d56618bc-87b6-4c7e-9687-63cbf618aa4a\"]}"
     },
     {
-      "quelle": "Patentregister Österreich",
-      "fundstellen": "AT 987654 B1, veröffentlicht 24.07.2025",
       "fallnummer": "PT-2025-006",
+      "fundstellen": "AT 987654 B1, veröffentlicht 24.07.2025",
+      "quelle": "Patentregister Österreich",
       "zeitstempel": [
         "erfassung:2025-07-24T04:47:52.193654:ee826412-bf34-452a-bb02-7928c83c757c",
         "verarbeitung:2025-07-24T05:47:52.193654:1286aad5-e68b-4d2b-a2fc-d85ac6a5f9d0",
         "validierung:2025-07-24T06:47:52.193654:7f1b036d-e6c4-41be-82f6-fc814ede7ac8",
         "archivierung:2025-07-24T09:47:52.193654:44ac89e5-f81a-4bae-9fe7-1ef86f2c0faa"
       ],
-      "afm_string": "{\"quelle\": \"Patentregister Österreich\", \"fundstellen\": \"AT 987654 B1, veröffentlicht 24.07.2025\", \"fallnummer\": \"PT-2025-006\", \"zeitstempel\": [\"erfassung:2025-07-24T04:47:52.193654:ee826412-bf34-452a-bb02-7928c83c757c\", \"verarbeitung:2025-07-24T05:47:52.193654:1286aad5-e68b-4d2b-a2fc-d85ac6a5f9d0\", \"validierung:2025-07-24T06:47:52.193654:7f1b036d-e6c4-41be-82f6-fc814ede7ac8\", \"archivierung:2025-07-24T09:47:52.193654:44ac89e5-f81a-4bae-9fe7-1ef86f2c0faa\"]}"
+      "afm_string": "{\"fallnummer\": \"PT-2025-006\", \"fundstellen\": \"AT 987654 B1, veröffentlicht 24.07.2025\", \"quelle\": \"Patentregister Österreich\", \"zeitstempel\": [\"erfassung:2025-07-24T04:47:52.193654:ee826412-bf34-452a-bb02-7928c83c757c\", \"verarbeitung:2025-07-24T05:47:52.193654:1286aad5-e68b-4d2b-a2fc-d85ac6a5f9d0\", \"validierung:2025-07-24T06:47:52.193654:7f1b036d-e6c4-41be-82f6-fc814ede7ac8\", \"archivierung:2025-07-24T09:47:52.193654:44ac89e5-f81a-4bae-9fe7-1ef86f2c0faa\"]}"
     },
     {
-      "quelle": "Markenregister Wien",
-      "fundstellen": "M 654321, Marke 'TestMark'",
       "fallnummer": "MR-2025-007",
+      "fundstellen": "M 654321, Marke 'TestMark'",
+      "quelle": "Markenregister Wien1",
       "zeitstempel": [
-        "erfassung:2025-07-24T11:17:52.193654:bf527c3d-b44d-458f-bc94-528b80347493"
+        "erfassung:2025-07-24T11:17:52.193654:bf527c3d-b44d-458f-bc94-528b80347493",
+        "verarbeitung:2025-07-24T16:51:46.075372:1cafa27c-dccc-4ace-945b-0443c525f1cb"
       ],
-      "afm_string": "{\"quelle\": \"Markenregister Wien\", \"fundstellen\": \"M 654321, Marke 'TestMark'\", \"fallnummer\": \"MR-2025-007\", \"zeitstempel\": [\"erfassung:2025-07-24T11:17:52.193654:bf527c3d-b44d-458f-bc94-528b80347493\"]}"
+      "afm_string": "{\"fallnummer\": \"MR-2025-007\", \"fundstellen\": \"M 654321, Marke 'TestMark'\", \"quelle\": \"Markenregister Wien1\", \"zeitstempel\": [\"erfassung:2025-07-24T11:17:52.193654:bf527c3d-b44d-458f-bc94-528b80347493\", \"verarbeitung:2025-07-24T16:51:46.075372:1cafa27c-dccc-4ace-945b-0443c525f1cb\"]}"
     },
     {
-      "quelle": "Gewerberegister Linz",
-      "fundstellen": "GW 111222, Konzession Gastgewerbe",
       "fallnummer": "GW-2025-008",
+      "fundstellen": "GW 111222, Konzession Gastgewerbe",
+      "quelle": "Gewerberegister Linz",
       "zeitstempel": [
         "erfassung:2025-07-24T10:47:52.193654:9ee31a70-0dbb-4b03-ba97-f0fcc92fafcd",
         "verarbeitung:2025-07-24T11:17:52.193654:ca6d5db6-4c58-4a2c-abc1-acc259f7e3c2",
         "validierung:2025-07-24T11:32:52.193654:e43fa006-f0a2-476c-beed-62deb5d394d0"
       ],
-      "afm_string": "{\"quelle\": \"Gewerberegister Linz\", \"fundstellen\": \"GW 111222, Konzession Gastgewerbe\", \"fallnummer\": \"GW-2025-008\", \"zeitstempel\": [\"erfassung:2025-07-24T10:47:52.193654:9ee31a70-0dbb-4b03-ba97-f0fcc92fafcd\", \"verarbeitung:2025-07-24T11:17:52.193654:ca6d5db6-4c58-4a2c-abc1-acc259f7e3c2\", \"validierung:2025-07-24T11:32:52.193654:e43fa006-f0a2-476c-beed-62deb5d394d0\"]}"
+      "afm_string": "{\"fallnummer\": \"GW-2025-008\", \"fundstellen\": \"GW 111222, Konzession Gastgewerbe\", \"quelle\": \"Gewerberegister Linz\", \"zeitstempel\": [\"erfassung:2025-07-24T10:47:52.193654:9ee31a70-0dbb-4b03-ba97-f0fcc92fafcd\", \"verarbeitung:2025-07-24T11:17:52.193654:ca6d5db6-4c58-4a2c-abc1-acc259f7e3c2\", \"validierung:2025-07-24T11:32:52.193654:e43fa006-f0a2-476c-beed-62deb5d394d0\"]}"
     },
     {
-      "quelle": "Notariatsevidenz Klagenfurt",
-      "fundstellen": "NE 789456, Vertrag vom 23.07.2025",
       "fallnummer": "NE-2025-009",
+      "fundstellen": "NE 789456, Vertrag vom 23.07.2025",
+      "quelle": "Notariatsevidenz Klagenfurt",
       "zeitstempel": [
         "erfassung:2025-07-24T11:02:52.193654:7f1ebc66-6212-4f20-94bb-ec6b0bc56317",
         "verarbeitung:2025-07-24T11:27:52.193654:d6f8709f-a44c-4a3b-b975-e333faa57fef"
       ],
-      "afm_string": "{\"quelle\": \"Notariatsevidenz Klagenfurt\", \"fundstellen\": \"NE 789456, Vertrag vom 23.07.2025\", \"fallnummer\": \"NE-2025-009\", \"zeitstempel\": [\"erfassung:2025-07-24T11:02:52.193654:7f1ebc66-6212-4f20-94bb-ec6b0bc56317\", \"verarbeitung:2025-07-24T11:27:52.193654:d6f8709f-a44c-4a3b-b975-e333faa57fef\"]}"
+      "afm_string": "{\"fallnummer\": \"NE-2025-009\", \"fundstellen\": \"NE 789456, Vertrag vom 23.07.2025\", \"quelle\": \"Notariatsevidenz Klagenfurt\", \"zeitstempel\": [\"erfassung:2025-07-24T11:02:52.193654:7f1ebc66-6212-4f20-94bb-ec6b0bc56317\", \"verarbeitung:2025-07-24T11:27:52.193654:d6f8709f-a44c-4a3b-b975-e333faa57fef\"]}"
     },
     {
-      "quelle": "Testdatenbank Automatik",
-      "fundstellen": "Auto-Import Batch 001",
       "fallnummer": "AUTO-2025-010",
+      "fundstellen": "Auto-Import Batch 001",
+      "quelle": "Testdatenbank Automatik",
       "zeitstempel": [
         "erfassung:2025-07-24T11:37:52.193654:e8523726-da02-4982-a414-be45a20873fb",
         "verarbeitung:2025-07-24T11:42:52.193654:0855d6b0-2fec-4f1f-93c2-93cd020037c1",
         "validierung:2025-07-24T11:45:52.193654:ac35e628-0050-4936-96d0-87111bca1248",
         "archivierung:2025-07-24T11:47:52.193654:09918152-2b66-45d8-878a-e692ae0b0de8"
       ],
-      "afm_string": "{\"quelle\": \"Testdatenbank Automatik\", \"fundstellen\": \"Auto-Import Batch 001\", \"fallnummer\": \"AUTO-2025-010\", \"zeitstempel\": [\"erfassung:2025-07-24T11:37:52.193654:e8523726-da02-4982-a414-be45a20873fb\", \"verarbeitung:2025-07-24T11:42:52.193654:0855d6b0-2fec-4f1f-93c2-93cd020037c1\", \"validierung:2025-07-24T11:45:52.193654:ac35e628-0050-4936-96d0-87111bca1248\", \"archivierung:2025-07-24T11:47:52.193654:09918152-2b66-45d8-878a-e692ae0b0de8\"]}"
+      "afm_string": "{\"fallnummer\": \"AUTO-2025-010\", \"fundstellen\": \"Auto-Import Batch 001\", \"quelle\": \"Testdatenbank Automatik\", \"zeitstempel\": [\"erfassung:2025-07-24T11:37:52.193654:e8523726-da02-4982-a414-be45a20873fb\", \"verarbeitung:2025-07-24T11:42:52.193654:0855d6b0-2fec-4f1f-93c2-93cd020037c1\", \"validierung:2025-07-24T11:45:52.193654:ac35e628-0050-4936-96d0-87111bca1248\", \"archivierung:2025-07-24T11:47:52.193654:09918152-2b66-45d8-878a-e692ae0b0de8\"]}"
+    },
+    {
+      "fundstellen": "auch da echt",
+      "quelle": "FLOPIPIP_Test2",
+      "zeitstempel": [
+        "erfassung:2025-07-24T17:06:17.701089:460607c3-3c3f-4fe7-aac7-73f1b720af1e",
+        "verarbeitung:2025-07-24T17:06:38.086907:2ad727df-b68f-47d5-a4da-2be078d79b74"
+      ],
+      "afm_string": "{\"fundstellen\": \"auch da echt\", \"quelle\": \"FLOPIPIP_Test2\", \"zeitstempel\": [\"erfassung:2025-07-24T17:06:17.701089:460607c3-3c3f-4fe7-aac7-73f1b720af1e\", \"verarbeitung:2025-07-24T17:06:38.086907:2ad727df-b68f-47d5-a4da-2be078d79b74\"]}"
     }
   ]
 }

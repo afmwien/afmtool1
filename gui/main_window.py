@@ -186,10 +186,30 @@ class AFMToolGUI:
             log_action("GUI_ERROR", f"Report-Fehler: {str(e)}")
     
     def quit_app(self):
-        """Anwendung beenden"""
-        log_action("GUI_STOP", "AFMTool GUI beendet")
-        self.root.quit()
-        self.root.destroy()
+        """Anwendung beenden mit Session-Cleanup"""
+        try:
+            # Session-Daten synchronisieren und bereinigen
+            if hasattr(self, 'data_service'):
+                print("🔄 [QUIT] Starte Session-Cleanup...")
+                self.data_service.sync_and_shutdown()
+            
+            log_action("GUI_STOP", "AFMTool GUI beendet")
+            self.root.quit()
+            self.root.destroy()
+            
+        except Exception as e:
+            print(f"⚠️ [QUIT] Fehler beim Beenden: {e}")
+            # Trotzdem beenden, auch wenn Cleanup fehlschlägt
+            self.root.quit()
+            self.root.destroy()
+    
+    def show_message(self, title, message):
+        """Zeigt Message-Dialog für Benutzer-Feedback"""
+        try:
+            messagebox.showinfo(title, message)
+        except Exception as e:
+            print(f"⚠️ [MESSAGE] Dialog-Fehler: {e}")
+            print(f"📢 [MESSAGE] {title}: {message}")
     
     def run(self):
         """GUI starten"""
