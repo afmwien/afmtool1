@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-AFM Export Service
-Exportiert AFM-Strings aus cases.json in versionierte Export-Dateien
+AFM Pure Export Service  
+Direkter AFM-String Export ohne Case-Rekonstruktion
 """
 
 import json
@@ -12,52 +12,44 @@ import sys
 # Utils importieren
 sys.path.append(str(Path(__file__).parent.parent))
 from utils.logger import log_action
+from utils.afm_pure import AFMPureStorage
 
 class AFMExportService:
-    """Service für AFM-String Export mit Versionierung"""
+    """Service für direkten AFM-String Export"""
     
     def __init__(self, cases_file, exports_dir):
-        self.cases_file = Path(cases_file)
+        self.pure_storage = AFMPureStorage(cases_file)
         self.exports_dir = Path(exports_dir)
         self.exports_dir.mkdir(exist_ok=True)
     
     def create_export(self):
-        """Erstellt neuen AFM-String Export"""
+        """Erstellt direkten AFM-String Export"""
         try:
-            print("📤 [EXPORT] Starte AFM-Export aus cases.json...")
+            print("📤 [PURE EXPORT] Starte direkten AFM-Export...")
             
-            # Cases laden
-            with open(self.cases_file, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            
-            cases = data.get("cases", [])
+            # Pure AFM-Daten laden
+            cases = self.pure_storage.load_pure_afm_data()
             if not cases:
-                print("⚠️ [EXPORT] Keine Cases zum Exportieren gefunden")
-                return False, "Keine Cases zum Exportieren gefunden"
+                print("⚠️ [PURE EXPORT] Keine AFM-Daten gefunden")
+                return False, "Keine AFM-Daten gefunden"
             
-            print(f"📂 [LOAD] {len(cases)} Cases aus cases.json geladen")
+            print(f"📂 [LOAD] {len(cases)} Cases aus Pure AFM geladen")
             
-            # AFM-Strings extrahieren
-            afm_strings = []
-            for case in cases:
-                afm_string = case.get("afm_string")
-                if afm_string:
-                    afm_strings.append(afm_string)
+            # Direkte AFM-Strings aus Storage extrahieren
+            with open(self.pure_storage.storage_file, 'r', encoding='utf-8') as f:
+                pure_data = json.load(f)
             
-            if not afm_strings:
-                print("⚠️ [EXPORT] Keine AFM-Strings gefunden")
-                return False, "Keine AFM-Strings gefunden"
-            
-            print(f"📝 [EXTRACT] {len(afm_strings)} AFM-Strings extrahiert")
+            afm_strings = pure_data.get('afm_strings', [])
             
             # Export-Datei erstellen
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-            export_file = self.exports_dir / f"afm_export_{timestamp}.json"
+            export_file = self.exports_dir / f"afm_pure_export_{timestamp}.json"
             
             export_data = {
                 "export_timestamp": datetime.now().isoformat(),
-                "export_version": "1.0",
+                "export_version": "pure_v1.0",
                 "case_count": len(afm_strings),
+                "format": "encrypted_afm_strings",
                 "afm_strings": afm_strings
             }
             
@@ -65,17 +57,17 @@ class AFMExportService:
             with open(export_file, 'w', encoding='utf-8') as f:
                 json.dump(export_data, f, indent=2, ensure_ascii=False)
             
-            print(f"💾 [SAVE] Export-Datei erstellt: {export_file.name}")
+            print(f"💾 [SAVE] Pure Export erstellt: {export_file.name}")
             
-            # Alte Exports bereinigen (nur letzte 10 behalten)
+            # Alte Exports bereinigen
             self._cleanup_old_exports()
             
-            log_action(f"AFM Export erstellt: {export_file.name} ({len(afm_strings)} Cases)")
-            print(f"✅ [EXPORT] AFM-Export erfolgreich abgeschlossen")
+            log_action(f"Pure AFM Export: {export_file.name} ({len(afm_strings)} AFM-Strings)")
+            print(f"✅ [PURE EXPORT] Direkter AFM-Export abgeschlossen")
             return True, export_file
             
         except Exception as e:
-            return False, f"Export-Fehler: {str(e)}"
+            return False, f"Pure Export-Fehler: {str(e)}"
     
     def get_latest_export(self):
         """Findet den neuesten Export"""
@@ -92,36 +84,37 @@ class AFMExportService:
             return None
     
     def load_export_cases(self, export_file=None):
-        """Lädt Cases aus Export-Datei"""
+        """Lädt Cases aus Pure AFM Export"""
         try:
             if export_file is None:
                 export_file = self.get_latest_export()
-                print("📥 [IMPORT] Lade neuesten Export...")
+                print("📥 [PURE IMPORT] Lade neuesten Pure Export...")
             else:
-                print(f"📥 [IMPORT] Lade spezifischen Export: {export_file.name}")
+                print(f"📥 [PURE IMPORT] Lade Export: {export_file.name}")
             
             if not export_file or not export_file.exists():
-                print("❌ [IMPORT] Export-Datei nicht gefunden")
+                print("❌ [PURE IMPORT] Export-Datei nicht gefunden")
                 return []
             
             with open(export_file, 'r', encoding='utf-8') as f:
                 export_data = json.load(f)
             
             afm_strings = export_data.get("afm_strings", [])
-            print(f"📂 [LOAD] {len(afm_strings)} AFM-Strings aus Export geladen")
+            print(f"📂 [LOAD] {len(afm_strings)} Verschlüsselte AFM-Strings geladen")
             
+            # AFM-Strings direkt zu Cases konvertieren
             cases = []
-            
-            # AFM-Strings zu Cases konvertieren
-            for i, afm_string in enumerate(afm_strings):
+            for i, encrypted_afm in enumerate(afm_strings):
                 try:
-                    case_data = json.loads(afm_string)
-                    cases.append(case_data)
-                except json.JSONDecodeError:
+                    case_data = self.pure_storage._decrypt_afm_string(encrypted_afm)
+                    if case_data:
+                        case = json.loads(case_data)
+                        cases.append(case)
+                except Exception:
                     print(f"⚠️ [PARSE] AFM-String {i+1} ungültig - übersprungen")
                     continue
             
-            print(f"✅ [IMPORT] {len(cases)} Cases erfolgreich konvertiert")
+            print(f"✅ [PURE IMPORT] {len(cases)} Cases erfolgreich dekodiert")
             return cases
             
         except Exception:

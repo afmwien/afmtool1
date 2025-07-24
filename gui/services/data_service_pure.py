@@ -126,73 +126,6 @@ class DataService:
         if len(cleaned_cases) != len(cases):
             self._save_cases({"cases": cleaned_cases})
     
-    def is_first_edit(self, case_index):
-        """Prüfen ob ein Case das erste Mal bearbeitet wird"""
-        cases = self.get_cases()
-        if case_index >= len(cases):
-            return False
-            
-        case = cases[case_index]
-        current_status = self.get_case_status(case)
-        
-        # Case ist bei "erfassung" und hat nur einen Zeitstempel
-        return (current_status == "erfassung" and 
-                len(case.get("zeitstempel", [])) == 1)
-    
-    def advance_case_status(self, case_index):
-        """Case zum nächsten Status weiterschalten"""
-        cases = self.get_cases()
-        if case_index >= len(cases):
-            return False
-            
-        case = cases[case_index]
-        current_status = self.get_case_status(case)
-        
-        # Status-Mapping für nächsten Schritt
-        next_status_map = {
-            "erfassung": "verarbeitung",
-            "verarbeitung": "validierung"
-        }
-        
-        next_status = next_status_map.get(current_status)
-        if not next_status:
-            return False
-            
-        # Neuen Zeitstempel hinzufügen
-        new_timestamp = f"{next_status}:{datetime.now().strftime('%Y-%m-%dT%H')}"
-        case["zeitstempel"].append(new_timestamp)
-        
-        # Speichern
-        self._save_cases({"cases": cases})
-        return True
-    
-    def retreat_case_status(self, case_index):
-        """Case zum vorherigen Status zurückschalten"""
-        cases = self.get_cases()
-        if case_index >= len(cases):
-            return False
-            
-        case = cases[case_index]
-        current_status = self.get_case_status(case)
-        
-        # Status-Mapping für vorherigen Schritt
-        previous_status_map = {
-            "verarbeitung": "erfassung",
-            "validierung": "verarbeitung"
-        }
-        
-        previous_status = previous_status_map.get(current_status)
-        if not previous_status:
-            return False
-            
-        # Letzten Zeitstempel entfernen
-        timestamps = case["zeitstempel"]
-        case["zeitstempel"] = [ts for ts in timestamps if not ts.startswith(f"{current_status}:")]
-        
-        # Speichern
-        self._save_cases({"cases": cases})
-        return True
-    
     def export_to_json(self):
         """Export erstellen"""
         return self.export_service.create_export()
@@ -206,16 +139,10 @@ class DataService:
     
     def sync_session_data(self):
         """Session-Daten synchronisieren (Pure AFM: direkt persistent)"""
-        try:
-            cases = self.get_cases()
-            print(f"🔄 [SYNC] Pure AFM System: {len(cases)} Cases synchronisiert")
-            return True, f"✅ {len(cases)} Cases synchronisiert"
-        except Exception as e:
-            return False, f"❌ Synchronisation fehlgeschlagen: {str(e)}"
+        cases = self.get_cases()
+        print(f"🔄 [SYNC] Pure AFM System: {len(cases)} Cases synchronisiert")
+        return True
     
     def sync_and_shutdown(self):
         """Synchronisieren und herunterfahren"""
-        success, message = self.sync_session_data()
-        if success:
-            print("🔄 [SHUTDOWN] Pure AFM Session beendet")
-        return success, message
+        return self.sync_session_data()

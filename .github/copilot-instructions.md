@@ -17,3 +17,41 @@ time.
 - NO extensive bullet points or lists
 - ONLY brief progress indicator with time estimate
 - Maximum 2-3 lines of essential information
+
+## TODO: Dynamische GUI-Felder für vollständige AFM-Modularität (EST: 45min)
+
+### PROBLEM
+- ❌ Case Editor GUI: nur 2 hardcoded Felder (`quelle`, `fundstellen`)
+- ✅ AFM-String System: 4+ Felder (`fallnummer`, `fundstellen`, `quelle`, `zeitstempel`)
+- 🚫 Fehlend in GUI: `fallnummer` + beliebige zukünftige Felder
+
+### LÖSUNG: Dynamische Feld-Generierung (5 Schritte)
+
+#### 1. AFM-Schema-Extraktor (10min)
+- `utils/afm_schema.py` - Extrahiert verfügbare Felder aus allen AFM-Strings
+- Funktion: `extract_field_schema()` → `{'fallnummer': 'text', 'quelle': 'text', ...}`
+- Automatische Typerkennung: Text, URL, Liste, etc.
+
+#### 2. GUI-Generator erweitern (15min) 
+- `gui/components/case_editor.py` - Dynamische Entry-Feld-Generierung
+- Ersetze hardcoded `quelle_entry`, `fundstellen_entry` durch Loop
+- Schema-basiert: `for field_name, field_type in schema.items(): create_entry()`
+
+#### 3. Save/Load-Logic anpassen (10min)
+- `save_changes()` - Alle dynamischen Felder sammeln statt nur 2 hardcoded
+- `load_case()` - Alle verfügbaren Felder in dynamische GUI laden
+- Backward-Kompatibilität: Fehlende Felder = leer
+
+#### 4. Validation/Update erweitern (5min)
+- `update_case()` - Dynamische Feld-Updates statt hardcoded
+- `has_unsaved_changes()` - Alle Felder prüfen, nicht nur quelle/fundstellen
+
+#### 5. Integration & Test (5min)
+- `fallnummer` sofort verfügbar in GUI
+- Neue AFM-Felder automatisch erkannt und angezeigt
+- Pure AFM-String Kompatibilität erhalten
+
+### ERGEBNIS
+- 🎯 **Vollständig modulare GUI**: Neue AFM-Felder automatisch in GUI verfügbar
+- ⚡ **Zero-Code-Erweiterung**: Neue Felder ohne GUI-Änderungen
+- 🔄 **Backward-Kompatibel**: Bestehende Cases funktionieren weiter
