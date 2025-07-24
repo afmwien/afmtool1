@@ -11,7 +11,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "utils"))
 
 try:
-    from fallnummer_verknuepfung import find_fallnummer_groups, get_case_summary, ensure_fallnummer, generate_hash_uuid
+    from utils.fallnummer_verknuepfung import find_fallnummer_groups, get_case_summary, ensure_fallnummer, generate_hash_uuid
     FALLBACK_MODE = False
 except ImportError:
     print("⚠️ Fallback: fallnummer_verknuepfung.py nicht verfügbar")

@@ -21,7 +21,9 @@ try:
     utils_path = str(Path(__file__).parent.parent.parent / "utils")
     if utils_path not in sys.path:
         sys.path.insert(0, utils_path)
-    from fallnummer_verknuepfung import find_fallnummer_groups
+    
+    # Import aus utils-Verzeichnis
+    from utils.fallnummer_verknuepfung import find_fallnummer_groups
     USE_FALLNUMMER_MODULE = True
     print("✅ Fallnummer-Modul geladen")
 except ImportError as e:
