@@ -302,23 +302,28 @@ class CaseEditorComponent:
         
         self.timestamps_text.config(state="disabled")
     
-    def advance_status(self):
-        """Status weiterschalten (vereinfacht, ohne Info-Dialog)"""
+    def change_status(self, direction):
+        """Status ändern (advance oder retreat)"""
         if self.selected_case_index is not None:
-            success = self.data_service.advance_case_status(self.selected_case_index)
+            success = False
+            if direction == "advance":
+                success = self.data_service.advance_case_status(self.selected_case_index)
+            elif direction == "retreat":
+                success = self.data_service.retreat_case_status(self.selected_case_index)
+            
             if success:
                 self.refresh()
                 from utils.logger import log_action
-                log_action("GUI_ACTION", f"Status vorwärts gewechselt für Case {self.selected_case_index}")
+                action_desc = "vorwärts" if direction == "advance" else "zurück"
+                log_action("GUI_ACTION", f"Status {action_desc} gewechselt für Case {self.selected_case_index}")
+    
+    def advance_status(self):
+        """Status weiterschalten (vereinfacht, ohne Info-Dialog)"""
+        self.change_status("advance")
     
     def retreat_status(self):
         """Status zurückschalten (vereinfacht, Felder bleiben bestehen)"""
-        if self.selected_case_index is not None:
-            success = self.data_service.retreat_case_status(self.selected_case_index)
-            if success:
-                self.refresh()
-                from utils.logger import log_action
-                log_action("GUI_ACTION", f"Status zurück gewechselt für Case {self.selected_case_index}")
+        self.change_status("retreat")
     
     def delete_case(self):
         """Case löschen (nur im Edit-Modus verfügbar)"""
@@ -605,7 +610,3 @@ class CaseEditorComponent:
         """Case-Editor anzeigen"""
         self.case_edit_frame.pack(fill="both", expand=True)
         self.load_case(case_index)
-    
-    def hide(self):
-        """Case-Editor ausblenden"""
-        self.case_edit_frame.pack_forget()

@@ -22,6 +22,12 @@ class AFMToolGUI:
     """Hauptfenster der AFMTool GUI - Web-kompatible Architektur"""
     
     def __init__(self):
+        """
+        Initialize the AFMTool GUI with tkinter interface and data services.
+        
+        Sets up the main window, data service layer, status mapping, and GUI components.
+        Designed with web-compatible architecture for future Flask migration.
+        """
         # GUI Framework (tkinter für Desktop, später Flask für Web)
         self.root = tk.Tk()
         self.root.title("AFMTool1 - GUI Interface")

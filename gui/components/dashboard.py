@@ -179,14 +179,6 @@ class DashboardComponent:
                 "🖼️ Bildvergleich"
             ), tags=(str(i),))
     
-    def edit_case(self, event=None):
-        """Case bearbeiten (für Button-Klick)"""
-        selection = self.tree.selection()
-        if selection:
-            item = self.tree.item(selection[0])
-            case_index = int(item['tags'][0])
-            self.parent.edit_case(case_index)
-    
     def new_case(self):
         """Neuen Case erstellen - mit Validierung im Editor"""
         # Leeren Case erstellen und direkt zum Editor mit Validierung
@@ -205,7 +197,3 @@ class DashboardComponent:
         """Dashboard anzeigen"""
         self.dashboard_frame.pack(fill="both", expand=True)
         self.refresh()
-    
-    def hide(self):
-        """Dashboard ausblenden"""
-        self.dashboard_frame.pack_forget()

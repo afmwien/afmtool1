@@ -3,6 +3,17 @@ from PIL import Image, ImageDraw, ImageFont
 import os
 
 def create_sample_image(text, filename, color="lightblue"):
+    """
+    Create a sample image with text overlay for testing purposes.
+    
+    Args:
+        text (str): Text to display on the image
+        filename (str): Path where to save the image file
+        color (str): Background color for the image (default: lightblue)
+    
+    Returns:
+        None: Saves the image to the specified filename
+    """
     img = Image.new('RGB', (600, 400), color=color)
     draw = ImageDraw.Draw(img)
     

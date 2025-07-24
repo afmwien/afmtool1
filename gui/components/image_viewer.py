@@ -428,31 +428,32 @@ class ImageViewerComponent:
         fallback = re.sub(r'[^\w]', '', text)[:20]
         return fallback
     
-    def load_left_image(self):
-        """Linkes Bild (Quelle) manuell laden"""
-        # Bestimme Startverzeichnis basierend auf aktuellen Case-Daten
-        initial_dir = self.get_initial_directory_for_manual_load("quelle")
+    def load_image_side(self, side):
+        """Bild für bestimmte Seite laden (left/right)"""
+        if side == "left":
+            title = "Quelle-Bild auswählen"
+            field_type = "quelle"
+        else:
+            title = "Fundstelle-Bild auswählen"
+            field_type = "fundstelle"
+        
+        initial_dir = self.get_initial_directory_for_manual_load(field_type)
         
         filepath = filedialog.askopenfilename(
-            title="Quelle-Bild auswählen",
+            title=title,
             initialdir=initial_dir,
             filetypes=[("Bilder", "*.png *.jpg *.jpeg *.bmp *.gif"), ("Alle Dateien", "*.*")]
         )
         if filepath:
-            self.load_image_from_path(filepath, "left")
+            self.load_image_from_path(filepath, side)
+    
+    def load_left_image(self):
+        """Linkes Bild (Quelle) manuell laden"""
+        self.load_image_side("left")
     
     def load_right_image(self):
         """Rechtes Bild (Fundstelle) manuell laden"""
-        # Bestimme Startverzeichnis basierend auf aktuellen Case-Daten
-        initial_dir = self.get_initial_directory_for_manual_load("fundstelle")
-        
-        filepath = filedialog.askopenfilename(
-            title="Fundstelle-Bild auswählen", 
-            initialdir=initial_dir,
-            filetypes=[("Bilder", "*.png *.jpg *.jpeg *.bmp *.gif"), ("Alle Dateien", "*.*")]
-        )
-        if filepath:
-            self.load_image_from_path(filepath, "right")
+        self.load_image_side("right")
     
     def get_initial_directory_for_manual_load(self, field_type):
         """Bestimmt intelligentes Startverzeichnis für manuelles Laden"""
@@ -559,15 +560,21 @@ class ImageViewerComponent:
         else:
             self.right_canvas.delete("all")
     
+    def adjust_zoom(self, direction):
+        """Zoom anpassen (in oder out)"""
+        if direction == "in":
+            self.zoom_factor = min(self.zoom_factor * 1.2, 5.0)
+        elif direction == "out":
+            self.zoom_factor = max(self.zoom_factor / 1.2, 0.1)
+        self.refresh_display()
+    
     def zoom_in(self):
         """Hineinzoomen"""
-        self.zoom_factor = min(self.zoom_factor * 1.2, 5.0)
-        self.refresh_display()
+        self.adjust_zoom("in")
     
     def zoom_out(self):
         """Herauszoomen"""
-        self.zoom_factor = max(self.zoom_factor / 1.2, 0.1)
-        self.refresh_display()
+        self.adjust_zoom("out")
     
     def reset_zoom(self):
         """Zoom zurücksetzen"""

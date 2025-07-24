@@ -43,7 +43,7 @@ def get_last_filled_cases(count=1):
     Letzte befüllte Cases aus der Datenbank abrufen
     
     Args:
-        count (int): Anzahl der letzten Cases (1 = nur letzter, -1 = alle)
+        count (int): Anzahl der letzten Cases (1 = nur letzter, -1 = alle, 0 = keine)
     
     Returns:
         list: Liste der letzten Cases oder leere Liste
@@ -51,10 +51,10 @@ def get_last_filled_cases(count=1):
     data = load_database()
     cases = data.get('cases', [])
     
-    if not cases:
+    if not cases or count == 0:
         return []
     
-    if count == -1:  # Alle Cases
+    if count < 0:  # Negative values (including -1) return all cases
         return cases
     elif count == 1:  # Nur letzter Case
         return [cases[-1]]
