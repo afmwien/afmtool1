@@ -33,7 +33,7 @@ def generate_afm_string_for_case(case_data, exclude_fields=None):
 
 def add_timestamp_to_case(case_data, timestamp_type="erfassung"):
     """
-    Fügt einen Zeitstempel zum Case hinzu
+    Fügt einen eindeutigen Zeitstempel zum Case hinzu
     
     Args:
         case_data (dict): Case-Daten
@@ -42,15 +42,14 @@ def add_timestamp_to_case(case_data, timestamp_type="erfassung"):
     Returns:
         dict: Aktualisierte Case-Daten mit neuem Zeitstempel
     """
+    from .unique_timestamps import generate_unique_timestamp
+    
     if "zeitstempel" not in case_data:
         case_data["zeitstempel"] = []
     
-    # Aktueller Zeitstempel im ISO-Format
-    current_timestamp = datetime.datetime.now().isoformat()
-    
-    # Zeitstempel mit Typ-Info hinzufügen
-    timestamp_entry = f"{timestamp_type}:{current_timestamp}"
-    case_data["zeitstempel"].append(timestamp_entry)
+    # Eindeutigen Zeitstempel generieren
+    unique_timestamp = generate_unique_timestamp(timestamp_type)
+    case_data["zeitstempel"].append(unique_timestamp)
     
     return case_data
 

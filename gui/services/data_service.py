@@ -48,6 +48,8 @@ class DataService:
     
     def advance_case_status(self, case_index):
         """Case zum nächsten Status weiterschalten (nur bis Freigegeben)"""
+        from utils.unique_timestamps import add_workflow_timestamp
+        
         cases = self.get_cases()
         if case_index >= len(cases):
             return False
@@ -66,14 +68,16 @@ class DataService:
         if not next_status:
             return False  # Bereits bei Freigegeben oder darüber
             
-        # Zeitstempel hinzufügen
-        timestamp = f"{next_status}:{datetime.now().isoformat()}"
-        case["zeitstempel"].append(timestamp)
+        # Eindeutigen Zeitstempel hinzufügen
+        success, updated_case, error = add_workflow_timestamp(case, next_status)
+        if not success:
+            return False  # Zeitstempel-Konflikt
         
         # AFM-String aktualisieren
-        update_case_afm_string(case)
+        update_case_afm_string(updated_case)
         
         # Speichern
+        cases[case_index] = updated_case
         self._save_cases({"cases": cases})
         return True
     
@@ -111,36 +115,52 @@ class DataService:
     
     def create_case(self, quelle, fundstellen):
         """Neuen Case erstellen (API-ready)"""
-        cases = self.get_cases()
+        from utils.unique_timestamps import save_case_with_validation
+        
         new_case = {
             "quelle": quelle,
             "fundstellen": fundstellen,
             "afm_string": "",
-            "zeitstempel": [f"erfassung:{datetime.now().isoformat()}"]
+            "zeitstempel": []
         }
-        # AFM-String generieren
-        update_case_afm_string(new_case)
         
-        cases.append(new_case)
+        # Case mit Validierung speichern
+        success, validated_case, error = save_case_with_validation(new_case)
+        if not success:
+            raise ValueError(f"Zeitstempel-Validierung fehlgeschlagen: {error}")
+        
+        # AFM-String generieren
+        update_case_afm_string(validated_case)
+        
+        cases = self.get_cases()
+        cases.append(validated_case)
         self._save_cases({"cases": cases})
-        return new_case
+        return validated_case
     
     def create_empty_case(self):
         """Leeren Case für manuelle Eingabe erstellen"""
+        from utils.unique_timestamps import save_case_with_validation
+        
         # Erst alle wirklich leeren Cases bereinigen
         self.cleanup_empty_cases()
         
-        cases = self.get_cases()
         new_case = {
             "quelle": "",
             "fundstellen": "",
             "afm_string": "",
-            "zeitstempel": [f"erfassung:{datetime.now().isoformat()}"]
+            "zeitstempel": []
         }
-        # Leeren AFM-String setzen
-        new_case["afm_string"] = ""
         
-        cases.append(new_case)
+        # Case mit Validierung erstellen
+        success, validated_case, error = save_case_with_validation(new_case)
+        if not success:
+            raise ValueError(f"Zeitstempel-Validierung fehlgeschlagen: {error}")
+        
+        # Leeren AFM-String setzen
+        validated_case["afm_string"] = ""
+        
+        cases = self.get_cases()
+        cases.append(validated_case)
         self._save_cases({"cases": cases})
         
         # Index des neuen Cases zurückgeben

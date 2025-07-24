@@ -345,12 +345,12 @@ class AFMReporter:
         return chart_path
     
     def generate_pdf_report(self):
-        """PDF-Report generieren mit festem A3 Querformat - überschreibt alte Version"""
+        """PDF-Report generieren mit festem A4 Querformat - überschreibt alte Version"""
         # Fester Dateiname - wird überschrieben
         pdf_path = self.report_dir / "afmtool_report_latest.pdf"
         
-        # Immer A3 Querformat verwenden
-        doc = SimpleDocTemplate(str(pdf_path), pagesize=landscape(A3))
+        # A4 Querformat verwenden
+        doc = SimpleDocTemplate(str(pdf_path), pagesize=landscape(A4))
         styles = getSampleStyleSheet()
         story = []
         
@@ -358,7 +358,7 @@ class AFMReporter:
         timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
         title = Paragraph("AFMTool1 - System Report", styles['Title'])
-        subtitle = Paragraph(f"Generiert am: {timestamp} | Format: A3 Querformat", styles['Normal'])
+        subtitle = Paragraph(f"Generiert am: {timestamp} | Format: A4 Querformat", styles['Normal'])
         story.append(title)
         story.append(subtitle)
         story.append(Spacer(1, 20))
@@ -393,80 +393,121 @@ class AFMReporter:
             ('GRID', (0, 0), (-1, -1), 1, colors.black),
             ('VALIGN', (0, 0), (-1, -1), 'TOP'),  # Vertikale Ausrichtung oben
         ]))
-        # A3 Querformat: Mehr Platz für Übersichtstabelle
-        a3_landscape_width = landscape(A3)[0] - 100  # Abzüglich Ränder
-        overview_table._argW = [a3_landscape_width * 0.25, a3_landscape_width * 0.15, 
-                               a3_landscape_width * 0.15, a3_landscape_width * 0.15, 
-                               a3_landscape_width * 0.3]  # Spaltenbreiten in Prozent
+        # A4 Querformat: Angepasste Breite für Übersichtstabelle
+        a4_landscape_width = landscape(A4)[0] - 100  # Abzüglich Ränder
+        overview_table._argW = [a4_landscape_width * 0.25, a4_landscape_width * 0.15, 
+                               a4_landscape_width * 0.15, a4_landscape_width * 0.15, 
+                               a4_landscape_width * 0.3]  # Spaltenbreiten in Prozent
         
         story.append(overview_table)
         story.append(Spacer(1, 20))
         
-        # 2. Detaildaten mit dynamischen Spalten (AFM String jetzt in jeder Zeile)
-        story.append(Paragraph("2. Cases-Datenbank Details (mit AFM Strings)", styles['Heading2']))
+        # 2. Detaildaten mit Matrix-View (Konzept 6: Doppel-Header mit Fallnummer-Gruppierung)
+        story.append(Paragraph("2. Cases-Datenbank Matrix-View (gruppiert nach Fallnummer-Typen)", styles['Heading2']))
         cases_data, columns = self.get_database_data("cases.json")
         
         if cases_data and columns:
-            # Für Detail-Tabelle: A3 Querformat mit optimalen Spaltenbreiten
-            headers = ['Nr.'] + [col.title() for col in columns]
-            optimal_pagesize, optimal_col_widths = self.calculate_optimal_pagesize_and_columns(headers)
+            # Gruppiere Cases nach Fallnummer-Prefix
+            groups = {}
+            for case in cases_data:
+                fallnummer = case.get('fallnummer', '')
+                if '-' in fallnummer:
+                    prefix = fallnummer.split('-')[0]
+                    if prefix not in groups:
+                        groups[prefix] = []
+                    groups[prefix].append(case)
             
-            # Da wir A3 verwenden, haben wir mehr Platz - verwende A3-optimierte Spaltenbreiten
-            a3_landscape_width = landscape(A3)[0] - 100  # Verfügbare Breite
+            # Erstelle doppelten Header: Gruppen-Header + Fallnummer-Header
+            group_header = ['']  # Erste Spalte leer
+            fallnummer_header = ['Eigenschaft']
             
-            # Spaltenbreiten für A3 neu berechnen
-            num_cols = len(headers)
-            if num_cols > 0:
-                base_width = a3_landscape_width / num_cols
-                # Erste Spalte (Nr.) etwas schmaler
-                col_widths = [base_width * 0.6] + [base_width * 1.1] * (num_cols - 1)
-                # Normalisieren damit Gesamtbreite stimmt
-                total_width = sum(col_widths)
-                optimal_col_widths = [(w / total_width) * a3_landscape_width for w in col_widths]
+            sorted_cases = []
+            for prefix in sorted(groups.keys()):
+                group_cases = groups[prefix]
+                sorted_cases.extend(group_cases)
+                
+                # Gruppenheader über mehrere Spalten
+                group_header.extend([prefix] + [''] * (len(group_cases) - 1))
+                fallnummer_header.extend([case['fallnummer'] for case in group_cases])
+            
+            # Beschränke auf 8 Fälle für A4-Querformat
+            if len(sorted_cases) > 8:
+                sorted_cases = sorted_cases[:8]
+                group_header = group_header[:9]  # +1 für erste Spalte
+                fallnummer_header = fallnummer_header[:9]
+            
+            table_data = [group_header, fallnummer_header]
+            
+            # A4 Querformat: Verfügbare Breite berechnen
+            a4_landscape_width = landscape(A4)[0] - 100  # Verfügbare Breite
             
             # Info über verwendetes Format
-            story.append(Paragraph(f"Detail-Tabelle verwendet: A3 Querformat für {len(columns)} Spalten", styles['Normal']))
+            story.append(Paragraph(f"Matrix-View mit Doppel-Header: A4 Querformat für {len(sorted_cases)} Fälle", styles['Normal']))
             story.append(Spacer(1, 10))
             
-            # Dynamische Tabellen-Header
-            cases_table_data = [headers]
+            # Datenzeilen: Eigenschaften als Zeilen, Fälle als Spalten
+            properties = ['Quelle', 'Fundstellen', 'Zeitschritte', 'AFM-Status']
+            for prop in properties:
+                row = [prop]
+                for case in sorted_cases:
+                    if prop == 'Quelle':
+                        value = case.get('quelle', '-')
+                        row.append(value[:12] + '...' if len(value) > 12 else value)
+                    elif prop == 'Fundstellen':
+                        value = case.get('fundstellen', '-')
+                        row.append(value[:12] + '...' if len(value) > 12 else value)
+                    elif prop == 'Zeitschritte':
+                        row.append(str(len(case.get('zeitstempel', []))))
+                    elif prop == 'AFM-Status':
+                        row.append('JSON-OK')
+                table_data.append(row)
             
-            # Maximale Zeichenanzahl pro Spalte basierend auf Spaltenbreite berechnen
-            max_chars_per_column = []
-            for width in optimal_col_widths:
-                # Ca. 8 Punkte pro Zeichen, minus Padding
-                max_chars = max(int((width - 20) / 8), 5)  # Mindestens 5 Zeichen
-                max_chars_per_column.append(max_chars)
+            # Tabelle erstellen
+            cases_table = Table(table_data)
             
-            for i, case in enumerate(cases_data, 1):
-                row = [str(i)]
-                for j, col in enumerate(columns):
-                    value = case.get(col, '-')
-                    # Text auf Spaltenbreite kürzen (nicht umbrechen!)
-                    max_chars = max_chars_per_column[j + 1] if j + 1 < len(max_chars_per_column) else 20
-                    truncated_value = self.truncate_text_to_column_width(str(value), max_chars)
-                    row.append(truncated_value)
-                    
-                cases_table_data.append(row)
+            # Spaltenbreiten für A4 berechnen
+            num_cols = len(table_data[0]) if table_data else 1
+            if num_cols > 1:
+                first_col_width = a4_landscape_width * 0.15  # Eigenschafts-Spalte
+                remaining_width = a4_landscape_width - first_col_width
+                case_col_width = remaining_width / (num_cols - 1)
+                col_widths = [first_col_width] + [case_col_width] * (num_cols - 1)
+            else:
+                col_widths = [a4_landscape_width]
             
-            # Tabelle erstellen mit optimalen Spaltenbreiten
-            cases_table = Table(cases_table_data)
-            cases_table.setStyle(TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue),
-                ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-                ('ALIGN', (0, 0), (-1, -1), 'LEFT'),  # Linksbündig
-                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                ('FONTSIZE', (0, 0), (-1, 0), 9),  # Schrift für Header
-                ('FONTSIZE', (0, 1), (-1, -1), 8),  # Schrift für Daten
-                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+            # Basis-Style für Matrix-View
+            table_style = [
+                ('BACKGROUND', (0, 0), (0, -1), colors.grey),  # Eigenschafts-Spalte
+                ('BACKGROUND', (0, 0), (-1, 1), colors.lightgrey),  # Header-Zeilen
+                ('TEXTCOLOR', (0, 0), (0, -1), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, 1), 'Helvetica-Bold'),
+                ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, -1), 8),
                 ('GRID', (0, 0), (-1, -1), 1, colors.black),
-                ('VALIGN', (0, 0), (-1, -1), 'TOP'),  # Vertikale Ausrichtung oben
-                # KEIN WORDWRAP - Text wird abgeschnitten!
-            ]))
+                ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+            ]
             
-            # Optimale Spaltenbreiten setzen
-            cases_table._argW = optimal_col_widths
+            # Gruppenheader-Styling: Gruppierung durch Rahmen und Farben
+            current_col = 1
+            group_colors = [colors.lightblue, colors.lightgreen, colors.lightyellow, 
+                           colors.lightcoral, colors.lightpink, colors.wheat, 
+                           colors.lavender, colors.lightcyan]
+            color_index = 0
+            
+            for prefix, group_cases in groups.items():
+                if current_col < len(group_header):
+                    group_size = min(len(group_cases), len(group_header) - current_col)
+                    if group_size > 0:
+                        # Gruppierung durch Farbe und Rahmen
+                        group_color = group_colors[color_index % len(group_colors)]
+                        table_style.append(('BACKGROUND', (current_col, 0), (current_col + group_size - 1, 0), group_color))
+                        table_style.append(('BOX', (current_col, 0), (current_col + group_size - 1, -1), 2, colors.red))
+                        color_index += 1
+                    current_col += group_size
+            
+            cases_table.setStyle(TableStyle(table_style))
+            cases_table._argW = col_widths
             
             story.append(cases_table)
                 
@@ -501,42 +542,53 @@ class AFMReporter:
         
         try:
             if os.name == 'nt':  # Windows
-                os.startfile(str(pdf_path))
+                # Verwende subprocess statt os.startfile für bessere Kontrolle
+                subprocess.Popen(['start', '', str(pdf_path)], shell=True)
             elif os.name == 'posix':  # macOS und Linux
                 subprocess.run(['open', str(pdf_path)])
             print(f"PDF geöffnet: {pdf_path}")
         except Exception as e:
-            print(f"PDF konnte nicht geöffnet werden: {e}")
+            print(f"PDF konnte nicht automatisch geöffnet werden: {e}")
             print(f"Manuell öffnen: {pdf_path}")
+            # Kein Fehler werfen, damit die Funktion normal beendet wird
 
 def main():
     """Report-Funktionen testen"""
-    reporter = AFMReporter()
+    try:
+        reporter = AFMReporter()
+        
+        print("=== AFMTool1 Report Generator ===")
+        print("\n1. Datenbank-Übersicht:")
+        overview = reporter.get_database_overview()
+        for db, info in overview.items():
+            if info['exists']:
+                print(f"  {db}: {info['records']} Datensätze, {info['size']} Bytes")
+                if 'structure' in info:
+                    struct = info['structure']
+                    if struct.get('fields'):
+                        print(f"    Spalten: {', '.join(struct['fields'])}")
+                    if struct.get('additional'):
+                        print(f"    Zusätzlich: {', '.join(struct['additional'])}")
+            else:
+                print(f"  {db}: Nicht gefunden")
+        
+        print("\n2. Generiere Projektstruktur-Diagramm...")
+        chart_path = reporter.generate_project_structure_chart()
+        print(f"  Gespeichert: {chart_path}")
+        
+        print("\n3. Generiere PDF-Report...")
+        pdf_path = reporter.generate_pdf_report()
+        print(f"  PDF-Report: {pdf_path}")
+        
+        print("\nReport-Generierung abgeschlossen!")
+        
+    except Exception as e:
+        print(f"❌ Fehler bei der Report-Generierung: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
     
-    print("=== AFMTool1 Report Generator ===")
-    print("\n1. Datenbank-Übersicht:")
-    overview = reporter.get_database_overview()
-    for db, info in overview.items():
-        if info['exists']:
-            print(f"  {db}: {info['records']} Datensätze, {info['size']} Bytes")
-            if 'structure' in info:
-                struct = info['structure']
-                if struct.get('fields'):
-                    print(f"    Spalten: {', '.join(struct['fields'])}")
-                if struct.get('additional'):
-                    print(f"    Zusätzlich: {', '.join(struct['additional'])}")
-        else:
-            print(f"  {db}: Nicht gefunden")
-    
-    print("\n2. Generiere Projektstruktur-Diagramm...")
-    chart_path = reporter.generate_project_structure_chart()
-    print(f"  Gespeichert: {chart_path}")
-    
-    print("\n3. Generiere PDF-Report...")
-    pdf_path = reporter.generate_pdf_report()
-    print(f"  PDF-Report: {pdf_path}")
-    
-    print("\nReport-Generierung abgeschlossen!")
+    return True
 
 if __name__ == "__main__":
     main()
