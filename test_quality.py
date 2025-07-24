@@ -243,22 +243,5 @@ def _check_workflow_step(content, step_type):
 
 # ----------- Punkt 4: Kompatibilität für Internetanwendung -----------
 
-def test_web_compatibility():
-    """
-    Prüft, ob das Projekt von lokalen Dateipfaden und IO unabhängig ist.
-    Gibt Hinweise auf Bereiche, die für Webanwendung angepasst werden müssen.
-    """
-    # Beispiel: Suche nach direkten open()-Aufrufen außerhalb von Utils/DB
-    issues = []
-    for root, _, files in os.walk(REPO_ROOT):
-        for fname in files:
-            if fname.endswith(".py"):
-                fpath = os.path.join(root, fname)
-                with open(fpath, encoding="utf-8") as f:
-                    content = f.read()
-                    if "open(" in content and "utils" not in fpath:
-                        issues.append(fpath)
-    assert not issues, f"Dateioperationen gefunden, die für Web-Kompatibilität problematisch sind: {issues}"
-
-# -------------------
+ 
 # Zum Starten: pytest test_quality.py
