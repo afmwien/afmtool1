@@ -19,8 +19,20 @@ Tests:
 
 import os
 import ast
-import pytest
 import json
+
+# Pytest optional - für GitHub Actions
+try:
+    import pytest
+    PYTEST_AVAILABLE = True
+except ImportError:
+    PYTEST_AVAILABLE = False
+    # Mock pytest.fail für lokale Ausführung
+    class MockPytest:
+        @staticmethod
+        def fail(msg):
+            raise AssertionError(msg)
+    pytest = MockPytest()
 
 REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 

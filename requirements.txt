@@ -1,11 +1,14 @@
-# AFMTool1 Requirements - Vereinfacht für GitHub Actions
+# AFMTool1 Requirements - Vollständig für Production & CI/CD
 # Core Dependencies
+
+# GUI Dependencies (tkinter is built-in Python, aber für CI/CD)
+# tkinter - Built-in with Python (no pip install needed)
 
 # Reporting Dependencies  
 matplotlib>=3.7.0
 reportlab>=4.0.0
 
-# Testing Dependencies (Required)
+# Testing Dependencies (Required for CI/CD)
 pytest>=7.0.0
 
 # Optional: Code Quality Tools (nur wenn verfügbar)

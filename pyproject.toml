@@ -1,75 +1,15 @@
-# AFMTool1 - Code Quality Configuration
-
-[tool.black]
-line-length = 120
-target-version = ['py39', 'py310', 'py311']
-include = '\.pyi?$'
-extend-exclude = '''
-/(
-  # directories
-  \.eggs
-  | \.git
-  | \.venv
-  | \.tox
-  | \.pytest_cache
-  | __pycache__
-  | build
-  | dist
-)/
-'''
-
-[tool.isort]
-profile = "black"
-line_length = 120
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-ensure_newline_before_comments = true
+# AFMTool1 - Minimal Configuration
 
 [tool.pytest.ini_options]
 testpaths = ["test", "."]
 python_files = ["test_*.py", "*_test.py"]
-python_classes = ["Test*"]
 python_functions = ["test_*"]
 addopts = [
     "--verbose",
     "--tb=short",
-    "--strict-markers",
-    "--disable-warnings",
-    "--cov=.",
-    "--cov-report=term-missing",
-    "--cov-report=html",
-    "--cov-report=xml"
+    "--disable-warnings"
 ]
-markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "integration: marks tests as integration tests",
-    "unit: marks tests as unit tests"
-]
-
-[tool.coverage.run]
-source = ["."]
-omit = [
-    "*/tests/*",
-    "*/test_*",
-    "*/.venv/*",
-    "*/venv/*",
-    "*/__pycache__/*",
-    "*/.*",
-    "setup.py",
-    "conftest.py"
-]
-
-[tool.coverage.report]
-precision = 2
-show_missing = true
-skip_covered = false
-
-[tool.bandit]
-exclude_dirs = ["tests", ".venv", "venv"]
-skips = ["B101", "B601"]
 
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"

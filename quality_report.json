@@ -1,0 +1,53 @@
+{
+  "timestamp": "unknown",
+  "tests": {
+    "unused_functions": {
+      "status": "FAILED",
+      "message": "Nicht genutzte Funktionen gefunden:\n  - maxima.py: analyse_text\n"
+    },
+    "missing_links": {
+      "status": "PASSED",
+      "message": "OK"
+    },
+    "workflow_files": {
+      "status": "PASSED",
+      "message": "OK"
+    },
+    "web_compatibility": {
+      "status": "PASSED",
+      "message": "OK"
+    },
+    "code_style": {
+      "status": "FAILED",
+      "message": "Code-Style Probleme gefunden (985 total, erste 10):\n  - main.py:13 - Trailing Whitespace\n  - main.py:19 - Trailing Whitespace\n  - main.py:21 - Trailing Whitespace\n  - main.py:24 - Trailing Whitespace\n  - main.py:30 - Trailing Whitespace\n  - main.py:35 - Trailing Whitespace\n  - main_gui.py:16 - Trailing Whitespace\n  - test_quality.py:7 - Trailing Whitespace\n  - test_quality.py:85 - Trailing Whitespace\n  - test_quality.py:88 - Trailing Whitespace\n"
+    },
+    "security_issues": {
+      "status": "FAILED",
+      "message": "Potentielle Sicherheitsprobleme gefunden:\n  - main.py: Raw input() usage\n  - test_quality.py: Dangerous eval() usage\n  - test_quality.py: Dangerous exec() usage\n  - test_quality.py: Dangerous os.system() usage\n  - test_quality.py: Subprocess with shell=True\n  - test_quality.py: Raw input() usage\n  - test_quality.py: Unsafe pickle.load\n  - test_quality.py: Unsafe yaml.load without Loader\n  - report.py: Subprocess with shell=True\n"
+    },
+    "error_handling": {
+      "status": "PASSED",
+      "message": "OK"
+    },
+    "import_structure": {
+      "status": "PASSED",
+      "message": "OK"
+    },
+    "documentation": {
+      "status": "PASSED",
+      "message": "OK"
+    },
+    "file_sizes": {
+      "status": "PASSED",
+      "message": "OK"
+    },
+    "json_validity": {
+      "status": "FAILED",
+      "message": "JSON-Validierungsfehler:\n  - v3_0.json: Expecting value: line 1 column 1 (char 0)\n"
+    },
+    "github_actions": {
+      "status": "PASSED",
+      "message": "OK"
+    }
+  }
+}
